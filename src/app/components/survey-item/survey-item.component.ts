@@ -1,13 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Survey } from '../../Survey';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatIconModule } from '@angular/material/icon';
-import {
-  faCheck,
-  faHourglassHalf,
-  faPaperPlane,
-} from '@fortawesome/free-solid-svg-icons';
 import { FormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
@@ -21,7 +15,6 @@ import { NgIf, NgStyle } from '@angular/common';
   standalone: true,
   imports: [
     MatCardModule,
-    FontAwesomeModule,
     MatDividerModule,
     FormsModule,
     MatInputModule,

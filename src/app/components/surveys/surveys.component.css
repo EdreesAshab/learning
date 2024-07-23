@@ -1,1 +1,15 @@
+.subNav {
+  display: flex;
+  justify-content: space-between;
+}
 
+.selectedSurvey {
+  border: 3px solid var(--bColor);
+  background-color: #f9f9f9;
+}
+
+.selectedSurvey .iconDiv {
+  background-color: var(--bColor);
+  border-color: var(--bColor);
+  scale: 1.05;
+}

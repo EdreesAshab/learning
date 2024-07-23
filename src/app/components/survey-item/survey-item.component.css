@@ -25,16 +25,16 @@
   background-color: #f9f9f9;
 }
 
+.survey-item:hover .iconDiv {
+  background-color: var(--bColor);
+  border-color: var(--bColor);
+  scale: 1.05;
+}
+
 .iconDiv {
   border: 1px solid #e8e8e8;
   border-radius: 50%;
   padding: 5px 10px 0 10px;
   margin-top: 15px;
   transition: 0.3s;
-}
-
-.survey-item:hover .iconDiv {
-  background-color: var(--bColor);
-  border-color: var(--bColor);
-  scale: 1.05;
 }

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
+import { Component } from '@angular/core';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { SurveyItemComponent } from '../survey-item/survey-item.component';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { Survey } from '../../Survey';
 import data from '../../../../db.json';
@@ -14,10 +16,13 @@ import data from '../../../../db.json';
   imports: [
     NgFor,
     NgIf,
+    NgClass,
     SurveyItemComponent,
     MatPaginatorModule,
     MatTabsModule,
     MatGridListModule,
+    MatButtonModule,
+    MatToolbarModule,
   ],
   templateUrl: './surveys.component.html',
   styleUrl: './surveys.component.css',
@@ -30,6 +35,8 @@ export class SurveysComponent {
   publishedSurveys: Survey[] = [];
   expiredSurveys: Survey[] = [];
   closedSurveys: Survey[] = [];
+
+  selectedSurvey: Survey;
 
   currentPage: number = 0;
   pageSize: number = 10;
@@ -105,5 +112,10 @@ export class SurveysComponent {
     this.tabIndex = tabChangeEvent.index;
     this.currentPage = 0;
     this.getCurrentSurveys();
+  }
+
+  selectSurvey(survey: Survey, event: Event): void {
+    this.selectedSurvey = survey;
+    console.log(event.target);
   }
 }
