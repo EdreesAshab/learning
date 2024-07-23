@@ -1,0 +1,52 @@
+<div>
+  <mat-tab-group (selectedTabChange)="handleTabChangeEvent($event)">
+    <mat-tab label="Published">
+      <p *ngIf="currentSurveys.length === 0">
+        No Surveys found for selected status
+      </p>
+      <mat-grid-list cols="5">
+        <mat-grid-tile *ngFor="let survey of currentSurveys"
+          ><app-survey-item [survey]="survey"></app-survey-item
+        ></mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+    <mat-tab label="Expired">
+      <p *ngIf="currentSurveys.length === 0">
+        No Surveys found for selected status
+      </p>
+      <mat-grid-list cols="5">
+        <mat-grid-tile *ngFor="let survey of currentSurveys"
+          ><app-survey-item [survey]="survey"></app-survey-item
+        ></mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+    <mat-tab label="Closed">
+      <p *ngIf="currentSurveys.length === 0">
+        No Surveys found for selected status
+      </p>
+      <mat-grid-list cols="5">
+        <mat-grid-tile *ngFor="let survey of currentSurveys"
+          ><app-survey-item [survey]="survey"></app-survey-item
+        ></mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+    <mat-tab label="All Surveys">
+      <p *ngIf="currentSurveys.length === 0">No Surveys found</p>
+      <mat-grid-list cols="5">
+        <mat-grid-tile *ngFor="let survey of currentSurveys"
+          ><app-survey-item [survey]="survey"></app-survey-item
+        ></mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+  </mat-tab-group>
+  <mat-paginator
+    [length]="activeTabSurveysLength"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    [showFirstLastButtons]="true"
+    [pageIndex]="currentPage"
+    (page)="handlePageEvent($event)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</div>

@@ -1,0 +1,55 @@
+<mat-card
+  appearance="outlined"
+  class="survey-item"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  [ngStyle]="{ '--bColor': color }"
+>
+  <div class="iconDiv">
+    <mat-icon
+      [fontIcon]="surveyIcon"
+      [ngStyle]="{ color: iconColor }"
+    ></mat-icon>
+  </div>
+  <mat-card-content>{{ survey.SurveyName }}</mat-card-content>
+  <mat-divider></mat-divider>
+  <div *ngIf="surveyPeriods.length > 1">
+    <mat-form-field>
+      <mat-label>Select Period</mat-label>
+      <mat-select>
+        @for (period of surveyPeriods; track period) {
+        <mat-option [value]="period.ID"
+          >{{
+            period.START_DATE.substr(
+              0,
+              period.START_DATE.indexOf("T")
+            ).replaceAll("-", "/")
+          }}
+          -
+          {{
+            period.END_DATE.substr(0, period.END_DATE.indexOf("T")).replaceAll(
+              "-",
+              "/"
+            )
+          }}</mat-option
+        >
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div *ngIf="surveyPeriods.length === 1">
+    {{
+      surveyPeriods[0].START_DATE.substr(
+        0,
+        surveyPeriods[0].START_DATE.indexOf("T")
+      ).replaceAll("-", "/")
+    }}
+    -
+    {{
+      surveyPeriods[0].END_DATE.substr(
+        0,
+        surveyPeriods[0].END_DATE.indexOf("T")
+      ).replaceAll("-", "/")
+    }}
+  </div>
+</mat-card>
