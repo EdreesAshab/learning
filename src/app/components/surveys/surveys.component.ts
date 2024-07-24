@@ -7,10 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { Sort, MatSortModule } from '@angular/material/sort';
+import { FormsModule } from '@angular/forms';
 
 import { Survey } from '../../Survey';
 import data from '../../../../db.json';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-surveys',
@@ -27,6 +28,7 @@ import { FormsModule } from '@angular/forms';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    MatSortModule,
   ],
   templateUrl: './surveys.component.html',
   styleUrl: './surveys.component.css',
@@ -34,15 +36,17 @@ import { FormsModule } from '@angular/forms';
 export class SurveysComponent {
   surveys: Survey[] = data.surveys;
 
-  currentSurveys: Survey[];
-
   publishedSurveys: Survey[] = [];
   expiredSurveys: Survey[] = [];
   closedSurveys: Survey[] = [];
 
+  currentSurveys: Survey[];
+
+  searchedSurveys: Survey[];
+
   selectedSurvey: Survey | null = null;
 
-  @Input() search: string;
+  @Input() search: string = '';
 
   currentPage: number = 0;
   pageSize: number = 10;
@@ -71,47 +75,66 @@ export class SurveysComponent {
     this.getCurrentSurveys();
   }
 
+  searchByName(surveyStatus: string): void {
+    this.selectedSurvey = null;
+    this.searchedSurveys = [];
+    this.searchedSurveys = this.surveys.filter(
+      (survey) =>
+        survey.SurveyName.toLowerCase().includes(this.search.toLowerCase()) &&
+        (surveyStatus === '' || survey.SURVEY_STATUS_EN === surveyStatus)
+    );
+  }
+
   getCurrentSurveys(): void {
     this.currentSurveys = [];
+    this.searchedSurveys = [];
+
     if (this.tabIndex === 0) {
-      this.activeTabSurveysLength = this.publishedSurveys.length;
-      for (
-        let i = this.currentPage * this.pageSize;
-        i < (this.currentPage + 1) * this.pageSize &&
-        i < this.publishedSurveys.length;
-        i++
-      ) {
-        this.currentSurveys.push(this.publishedSurveys[i]);
+      if (this.search !== '') {
+        this.searchByName('Published');
+        this.copySurveys(this.searchedSurveys);
+        this.activeTabSurveysLength = this.searchedSurveys.length;
+      } else {
+        this.copySurveys(this.publishedSurveys);
+        this.activeTabSurveysLength = this.publishedSurveys.length;
       }
     } else if (this.tabIndex === 1) {
-      this.activeTabSurveysLength = this.expiredSurveys.length;
-      for (
-        let i = this.currentPage * this.pageSize;
-        i < (this.currentPage + 1) * this.pageSize &&
-        i < this.expiredSurveys.length;
-        i++
-      ) {
-        this.currentSurveys.push(this.expiredSurveys[i]);
+      if (this.search !== '') {
+        this.searchByName('Expired');
+        this.copySurveys(this.searchedSurveys);
+        this.activeTabSurveysLength = this.searchedSurveys.length;
+      } else {
+        this.copySurveys(this.expiredSurveys);
+        this.activeTabSurveysLength = this.expiredSurveys.length;
       }
     } else if (this.tabIndex === 2) {
-      this.activeTabSurveysLength = this.closedSurveys.length;
-      for (
-        let i = this.currentPage * this.pageSize;
-        i < (this.currentPage + 1) * this.pageSize &&
-        i < this.closedSurveys.length;
-        i++
-      ) {
-        this.currentSurveys.push(this.closedSurveys[i]);
+      if (this.search !== '') {
+        this.searchByName('Closed');
+        this.copySurveys(this.searchedSurveys);
+        this.activeTabSurveysLength = this.searchedSurveys.length;
+      } else {
+        this.copySurveys(this.closedSurveys);
+        this.activeTabSurveysLength = this.closedSurveys.length;
       }
     } else if (this.tabIndex === 3) {
-      this.activeTabSurveysLength = this.surveys.length;
-      for (
-        let i = this.currentPage * this.pageSize;
-        i < (this.currentPage + 1) * this.pageSize && i < this.surveys.length;
-        i++
-      ) {
-        this.currentSurveys.push(this.surveys[i]);
+      if (this.search !== '') {
+        this.searchByName('');
+        this.copySurveys(this.searchedSurveys);
+        this.activeTabSurveysLength = this.searchedSurveys.length;
+      } else {
+        this.copySurveys(this.surveys);
+        this.activeTabSurveysLength = this.surveys.length;
       }
+    }
+  }
+
+  copySurveys(surveysArray: Survey[]): void {
+    for (
+      let i = this.currentPage * this.pageSize;
+      i < (this.currentPage + 1) * this.pageSize && i < surveysArray.length;
+      i++
+    ) {
+      this.currentSurveys.push(surveysArray[i]);
     }
   }
 
@@ -129,7 +152,7 @@ export class SurveysComponent {
   goToDashboard(): void {
     if (
       this.selectedSurvey?.SurveyPeriods &&
-      JSON.parse(this.selectedSurvey?.SurveyPeriods!).length > 1 &&
+      JSON.parse(this.selectedSurvey.SurveyPeriods).length > 1 &&
       !this.selectedSurvey?.SelectedPeriod
     ) {
       alert('Please select a period');

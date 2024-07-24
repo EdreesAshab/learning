@@ -11,7 +11,11 @@
     </mat-tab-group>
 
     <div class="surveySearch">
-      <button class="btn filledBtn" [disabled]="selectedSurvey === null" (click)="goToDashboard()">
+      <button
+        class="btn filledBtn"
+        [disabled]="selectedSurvey === null"
+        (click)="goToDashboard()"
+      >
         Go to Dashboard
       </button>
       <input
@@ -20,6 +24,7 @@
         placeholder="Search survey name"
         class="searchInput"
         name="search"
+        (input)="getCurrentSurveys()"
         [(ngModel)]="search"
       />
       <button class="btn unfilledBtn">Filter</button>
@@ -27,7 +32,14 @@
   </mat-toolbar>
 
   <div>
-    <p *ngIf="currentSurveys.length === 0">NO RESULTS FOUND</p>
+    <p
+      *ngIf="
+        (search === '' && currentSurveys.length === 0) ||
+        (search !== '' && searchedSurveys.length === 0)
+      "
+    >
+      NO RESULTS FOUND
+    </p>
     <mat-grid-list cols="3" rowHeight="2:1" gutterSize="20px">
       <mat-grid-tile *ngFor="let survey of currentSurveys"
         ><app-survey-item
