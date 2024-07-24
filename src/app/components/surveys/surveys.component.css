@@ -1,15 +1,62 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
 .subNav {
   display: flex;
   justify-content: space-between;
 }
 
-.selectedSurvey {
-  border: 3px solid var(--bColor);
-  background-color: #f9f9f9;
+.surveysContainer {
+  background-color: #fff;
+  margin: 15px 30px;
+  padding: 15px 30px;
 }
 
-.selectedSurvey .iconDiv {
-  background-color: var(--bColor);
-  border-color: var(--bColor);
-  scale: 1.05;
+.surveySearch {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75em;
+}
+
+.searchInput {
+  color: #b8b8b8;
+  padding-left: 15px;
+  border: 1px solid #b8b8b8;
+  border-radius: 5px;
+}
+
+.searchInput::after {
+  font-family: "Material Icons";
+  content: "login";
+  font-size: 1.5em;
+}
+
+.btn {
+  background: none;
+  border-radius: 5px;
+  padding: 0.75em 2em;
+  transition: 0.2s;
+}
+
+.filledBtn {
+  background-color: #02ca98;
+  color: white;
+  border: none;
+}
+
+.unfilledBtn {
+  border: 1px solid #02ca98;
+  color: #02ca98;
+}
+
+.filledBtn:disabled {
+  background-color: #acacac;
+}
+
+.filledBtn:enabled:hover {
+  opacity: 0.8;
+}
+
+.unfilledBtn:enabled:hover {
+  background-color: #e9e5e5;
+  color: black;
 }

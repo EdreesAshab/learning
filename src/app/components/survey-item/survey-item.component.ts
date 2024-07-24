@@ -3,19 +3,17 @@ import { MatCardModule } from '@angular/material/card';
 import { Survey } from '../../Survey';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Period } from '../../Period';
-import { NgIf, NgStyle } from '@angular/common';
+import { NgIf, NgStyle, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-survey-item',
   standalone: true,
   imports: [
     MatCardModule,
-    MatDividerModule,
     FormsModule,
     MatInputModule,
     MatSelectModule,
@@ -23,12 +21,14 @@ import { NgIf, NgStyle } from '@angular/common';
     MatIconModule,
     NgIf,
     NgStyle,
+    NgClass,
   ],
   templateUrl: './survey-item.component.html',
   styleUrl: './survey-item.component.css',
 })
 export class SurveyItemComponent {
   @Input() survey: Survey;
+  @Input() isSelected: boolean;
   surveyIcon = 'check';
   color = '#02CA98';
   iconColor = this.color;

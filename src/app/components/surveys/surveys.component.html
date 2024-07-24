@@ -1,4 +1,4 @@
-<div>
+<div class="surveysContainer">
   <mat-toolbar class="subNav">
     <mat-tab-group
       (selectedTabChange)="handleTabChangeEvent($event)"
@@ -10,38 +10,45 @@
       <mat-tab label="All Surveys"> </mat-tab>
     </mat-tab-group>
 
-    <div>
-      <button mat-fab extended>Go to Dashboard</button>
-      <input type="text" placeholder="Search survey name" />
-      <button mat-fab extended>Filter</button>
+    <div class="surveySearch">
+      <button class="btn filledBtn" [disabled]="selectedSurvey === null" (click)="goToDashboard()">
+        Go to Dashboard
+      </button>
+      <input
+        type="text"
+        matInput
+        placeholder="Search survey name"
+        class="searchInput"
+        name="search"
+        [(ngModel)]="search"
+      />
+      <button class="btn unfilledBtn">Filter</button>
     </div>
   </mat-toolbar>
 
   <div>
     <p *ngIf="currentSurveys.length === 0">NO RESULTS FOUND</p>
-    <mat-grid-list cols="5" rowHeight="2:1">
+    <mat-grid-list cols="3" rowHeight="2:1" gutterSize="20px">
       <mat-grid-tile *ngFor="let survey of currentSurveys"
         ><app-survey-item
-          [ngClass]="{
-            selectedSurvey:
-              selectedSurvey &&
-              selectedSurvey.TEMPLATE_ID === survey.TEMPLATE_ID
-          }"
           [survey]="survey"
           (click)="selectSurvey(survey, $event)"
+          [isSelected]="
+            selectedSurvey !== null && selectedSurvey.SRV_ID === survey.SRV_ID
+          "
         ></app-survey-item
       ></mat-grid-tile>
     </mat-grid-list>
-  </div>
 
-  <mat-paginator
-    [length]="activeTabSurveysLength"
-    [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]"
-    [showFirstLastButtons]="true"
-    [pageIndex]="currentPage"
-    (page)="handlePageEvent($event)"
-    aria-label="Select page"
-  >
-  </mat-paginator>
+    <mat-paginator
+      [length]="activeTabSurveysLength"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      [showFirstLastButtons]="true"
+      [pageIndex]="currentPage"
+      (page)="handlePageEvent($event)"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
 </div>

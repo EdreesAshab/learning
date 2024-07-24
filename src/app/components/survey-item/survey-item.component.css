@@ -4,11 +4,22 @@
   align-items: center;
   justify-content: space-around;
   width: 250px;
-  height: fit-content;
+  height: 180px;
   overflow: hidden;
   position: relative;
   border-color: #e8e8e8;
   transition: 0.2s;
+}
+
+.selectedSurvey {
+  border: 3px solid var(--bColor);
+  background-color: #f9f9f9;
+}
+
+.selectedSurvey .iconDiv {
+  background-color: var(--bColor);
+  border-color: var(--bColor);
+  scale: 1.05;
 }
 
 .survey-item::before {

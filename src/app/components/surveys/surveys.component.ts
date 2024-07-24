@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { SurveyItemComponent } from '../survey-item/survey-item.component';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -6,9 +6,11 @@ import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 import { Survey } from '../../Survey';
 import data from '../../../../db.json';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-surveys',
@@ -17,12 +19,14 @@ import data from '../../../../db.json';
     NgFor,
     NgIf,
     NgClass,
+    FormsModule,
     SurveyItemComponent,
     MatPaginatorModule,
     MatTabsModule,
     MatGridListModule,
     MatButtonModule,
     MatToolbarModule,
+    MatIconModule,
   ],
   templateUrl: './surveys.component.html',
   styleUrl: './surveys.component.css',
@@ -36,7 +40,9 @@ export class SurveysComponent {
   expiredSurveys: Survey[] = [];
   closedSurveys: Survey[] = [];
 
-  selectedSurvey: Survey;
+  selectedSurvey: Survey | null = null;
+
+  @Input() search: string;
 
   currentPage: number = 0;
   pageSize: number = 10;
@@ -111,11 +117,17 @@ export class SurveysComponent {
   handleTabChangeEvent(tabChangeEvent: MatTabChangeEvent): void {
     this.tabIndex = tabChangeEvent.index;
     this.currentPage = 0;
+    this.selectedSurvey = null;
     this.getCurrentSurveys();
   }
 
   selectSurvey(survey: Survey, event: Event): void {
     this.selectedSurvey = survey;
-    console.log(event.target);
+  }
+
+  goToDashboard(): void {
+    alert(
+      `Go to selected Survey: ${this.selectedSurvey?.SRV_ID} - ${this.selectedSurvey?.SurveyNameEn}`
+    );
   }
 }
