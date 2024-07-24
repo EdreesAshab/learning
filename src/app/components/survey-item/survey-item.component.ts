@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { Survey } from '../../Survey';
 import { MatIconModule } from '@angular/material/icon';
@@ -48,11 +48,15 @@ export class SurveyItemComponent {
     }
   }
 
-  onMouseEnter() {
+  onMouseEnter(): void {
     this.iconColor = 'white';
   }
 
-  onMouseLeave() {
+  onMouseLeave(): void {
     this.iconColor = this.color;
+  }
+
+  changePeriod(period: Period): void {
+    this.survey.SelectedPeriod = period;
   }
 }

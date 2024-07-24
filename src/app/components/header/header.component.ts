@@ -3,12 +3,21 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
+import { InitialCircleComponent } from '../initial-circle/initial-circle.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, MatToolbarModule, MatDividerModule],
+  imports: [
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatDividerModule,
+    InitialCircleComponent,
+  ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  name: string = 'Edrees Ashab';
+}

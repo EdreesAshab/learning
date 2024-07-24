@@ -67,6 +67,7 @@ export class SurveysComponent {
   handlePageEvent(pageEvent: PageEvent): void {
     this.currentPage = pageEvent.pageIndex;
     this.pageSize = pageEvent.pageSize;
+    this.selectedSurvey = null;
     this.getCurrentSurveys();
   }
 
@@ -126,8 +127,16 @@ export class SurveysComponent {
   }
 
   goToDashboard(): void {
-    alert(
-      `Go to selected Survey: ${this.selectedSurvey?.SRV_ID} - ${this.selectedSurvey?.SurveyNameEn}`
-    );
+    if (
+      this.selectedSurvey?.SurveyPeriods &&
+      JSON.parse(this.selectedSurvey?.SurveyPeriods!).length > 1 &&
+      !this.selectedSurvey?.SelectedPeriod
+    ) {
+      alert('Please select a period');
+    } else {
+      alert(
+        `Go to selected Survey: ${this.selectedSurvey?.SRV_ID} - ${this.selectedSurvey?.SurveyNameEn}`
+      );
+    }
   }
 }

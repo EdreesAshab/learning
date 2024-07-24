@@ -1,3 +1,5 @@
+import { Period } from './Period';
+
 export interface Survey {
   TEMPLATE_ID?: number;
   TemplateName: string;
@@ -11,4 +13,5 @@ export interface Survey {
   SURVEY_STATUS_AR: string;
   SURVEY_STATUS_EN: string;
   SurveyPeriods: string | null;
+  SelectedPeriod?: Period | null;
 }

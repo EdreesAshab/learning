@@ -14,14 +14,15 @@
   </div>
   <mat-card-content>{{ survey.SurveyName }}</mat-card-content>
   <hr
+    *ngIf="surveyPeriods.length > 0"
     style="width: 100%; border: none; height: 1px; background-color: #e8e8e8"
   />
   <div *ngIf="surveyPeriods.length > 1">
     <mat-form-field>
       <mat-label>Select Period</mat-label>
-      <mat-select>
+      <mat-select (selectionChange)="changePeriod($event.value)">
         @for (period of surveyPeriods; track period) {
-        <mat-option [value]="period.ID"
+        <mat-option [value]="period"
           >{{
             period.START_DATE.substr(
               0,
