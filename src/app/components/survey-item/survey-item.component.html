@@ -12,35 +12,37 @@
       [ngStyle]="{ color: isSelected ? 'white' : iconColor }"
     ></mat-icon>
   </div>
+
   <mat-card-content>{{ survey.SurveyName }}</mat-card-content>
+
   <hr
     *ngIf="surveyPeriods.length > 0"
     style="width: 100%; border: none; height: 1px; background-color: #e8e8e8"
   />
-  <div *ngIf="surveyPeriods.length > 1">
-    <mat-form-field>
-      <mat-label>Select Period</mat-label>
-      <mat-select (selectionChange)="changePeriod($event.value)">
-        @for (period of surveyPeriods; track period) {
-        <mat-option [value]="period"
-          >{{
-            period.START_DATE.substr(
-              0,
-              period.START_DATE.indexOf("T")
-            ).replaceAll("-", "/")
-          }}
-          -
-          {{
-            period.END_DATE.substr(0, period.END_DATE.indexOf("T")).replaceAll(
-              "-",
-              "/"
-            )
-          }}</mat-option
-        >
-        }
-      </mat-select>
-    </mat-form-field>
-  </div>
+
+  <mat-form-field *ngIf="surveyPeriods.length > 1">
+    <mat-label>Select Period</mat-label>
+    <mat-select (selectionChange)="changePeriod($event.value)">
+      @for (period of surveyPeriods; track period) {
+      <mat-option [value]="period"
+        >{{
+          period.START_DATE.substr(
+            0,
+            period.START_DATE.indexOf("T")
+          ).replaceAll("-", "/")
+        }}
+        -
+        {{
+          period.END_DATE.substr(0, period.END_DATE.indexOf("T")).replaceAll(
+            "-",
+            "/"
+          )
+        }}</mat-option
+      >
+      }
+    </mat-select>
+  </mat-form-field>
+
   <div *ngIf="surveyPeriods.length === 1">
     {{
       surveyPeriods[0].START_DATE.substr(

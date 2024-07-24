@@ -1,14 +1,15 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
-.subNav {
+.subHeader {
   display: flex;
   justify-content: space-between;
 }
 
 .surveysContainer {
   background-color: #fff;
-  margin: 15px 30px;
-  padding: 15px 30px;
+  padding: 20px;
+  height: auto;
+  flex-grow: 1;
 }
 
 .surveySearch {

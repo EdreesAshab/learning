@@ -1,5 +1,7 @@
 <div class="surveysContainer">
-  <mat-toolbar class="subNav">
+  <!-- Sub Header -->
+  <mat-toolbar class="subHeader">
+    <!-- Survey Status Tab -->
     <mat-tab-group
       (selectedTabChange)="handleTabChangeEvent($event)"
       class="remove-border-bottom"
@@ -10,11 +12,12 @@
       <mat-tab label="All Surveys"> </mat-tab>
     </mat-tab-group>
 
+    <!-- Survey filter -->
     <div class="surveySearch">
       <button
         class="btn filledBtn"
         [disabled]="selectedSurvey === null"
-        (click)="goToDashboard()"
+        (click)="toggleSurveyDialog()"
       >
         Go to Dashboard
       </button>
@@ -31,7 +34,9 @@
     </div>
   </mat-toolbar>
 
+  <!-- Main section -->
   <div>
+    <!-- No Surveys -->
     <p
       *ngIf="
         (search === '' && currentSurveys.length === 0) ||
@@ -40,6 +45,8 @@
     >
       NO RESULTS FOUND
     </p>
+
+    <!-- Surveys list -->
     <mat-grid-list cols="3" rowHeight="2:1" gutterSize="20px">
       <mat-grid-tile *ngFor="let survey of currentSurveys"
         ><app-survey-item
@@ -51,16 +58,17 @@
         ></app-survey-item
       ></mat-grid-tile>
     </mat-grid-list>
-
-    <mat-paginator
-      [length]="activeTabSurveysLength"
-      [pageSize]="10"
-      [pageSizeOptions]="[5, 10, 25, 100]"
-      [showFirstLastButtons]="true"
-      [pageIndex]="currentPage"
-      (page)="handlePageEvent($event)"
-      aria-label="Select page"
-    >
-    </mat-paginator>
   </div>
+
+  <!-- Paginator -->
+  <mat-paginator
+    [length]="activeTabSurveysLength"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    [showFirstLastButtons]="true"
+    [pageIndex]="currentPage"
+    (page)="handlePageEvent($event)"
+    aria-label="Select page"
+  >
+  </mat-paginator>
 </div>

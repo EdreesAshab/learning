@@ -1,34 +1,35 @@
 import { Component, Input } from '@angular/core';
-import { NgClass, NgFor, NgIf } from '@angular/common';
-import { SurveyItemComponent } from '../survey-item/survey-item.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { Subscription } from 'rxjs';
+
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
-import { Sort, MatSortModule } from '@angular/material/sort';
-import { FormsModule } from '@angular/forms';
 
-import { Survey } from '../../Survey';
+import { SurveyItemComponent } from '../survey-item/survey-item.component';
+
+import { Survey } from '../../types';
+
 import data from '../../../../db.json';
 
 @Component({
   selector: 'app-surveys',
   standalone: true,
   imports: [
-    NgFor,
-    NgIf,
-    NgClass,
+    CommonModule,
     FormsModule,
-    SurveyItemComponent,
     MatPaginatorModule,
     MatTabsModule,
     MatGridListModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
-    MatSortModule,
+    SurveyItemComponent,
   ],
   templateUrl: './surveys.component.html',
   styleUrl: './surveys.component.css',
@@ -53,6 +54,10 @@ export class SurveysComponent {
   tabIndex: number = 0;
 
   activeTabSurveysLength = this.publishedSurveys.length;
+
+  subscription: Subscription;
+
+  showSurveyDialog: boolean = false;
 
   ngOnInit() {
     for (let survey of this.surveys) {
@@ -83,6 +88,16 @@ export class SurveysComponent {
         survey.SurveyName.toLowerCase().includes(this.search.toLowerCase()) &&
         (surveyStatus === '' || survey.SURVEY_STATUS_EN === surveyStatus)
     );
+  }
+
+  copySurveys(surveysArray: Survey[]): void {
+    for (
+      let i = this.currentPage * this.pageSize;
+      i < (this.currentPage + 1) * this.pageSize && i < surveysArray.length;
+      i++
+    ) {
+      this.currentSurveys.push(surveysArray[i]);
+    }
   }
 
   getCurrentSurveys(): void {
@@ -128,16 +143,6 @@ export class SurveysComponent {
     }
   }
 
-  copySurveys(surveysArray: Survey[]): void {
-    for (
-      let i = this.currentPage * this.pageSize;
-      i < (this.currentPage + 1) * this.pageSize && i < surveysArray.length;
-      i++
-    ) {
-      this.currentSurveys.push(surveysArray[i]);
-    }
-  }
-
   handleTabChangeEvent(tabChangeEvent: MatTabChangeEvent): void {
     this.tabIndex = tabChangeEvent.index;
     this.currentPage = 0;
@@ -149,7 +154,7 @@ export class SurveysComponent {
     this.selectedSurvey = survey;
   }
 
-  goToDashboard(): void {
+  toggleSurveyDialog(): void {
     if (
       this.selectedSurvey?.SurveyPeriods &&
       JSON.parse(this.selectedSurvey.SurveyPeriods).length > 1 &&

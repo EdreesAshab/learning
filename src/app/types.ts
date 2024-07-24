@@ -1,4 +1,14 @@
-import { Period } from './Period';
+export interface Period {
+  ID?: number;
+  START_DATE: string;
+  END_DATE: string;
+}
+
+export interface Rule {
+  id: number;
+  message: string;
+  rule: Function;
+}
 
 export interface Survey {
   TEMPLATE_ID?: number;

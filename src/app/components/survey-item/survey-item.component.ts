@@ -1,27 +1,26 @@
 import { Component, Input } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { Survey } from '../../Survey';
-import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { Period } from '../../Period';
-import { NgIf, NgStyle, NgClass } from '@angular/common';
+
+import { Survey, Period } from '../../types';
 
 @Component({
   selector: 'app-survey-item',
   standalone: true,
   imports: [
-    MatCardModule,
+    CommonModule,
     FormsModule,
+    MatFormFieldModule,
+    MatCardModule,
+    MatIconModule,
     MatInputModule,
     MatSelectModule,
-    MatFormFieldModule,
-    MatIconModule,
-    NgIf,
-    NgStyle,
-    NgClass,
   ],
   templateUrl: './survey-item.component.html',
   styleUrl: './survey-item.component.css',

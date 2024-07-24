@@ -1,12 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Rule } from '../../Rule';
-import { NgFor, NgIf, NgStyle } from '@angular/common';
+import { CommonModule } from '@angular/common';
+
+import { Rule } from '../../types';
 
 @Component({
   selector: 'app-password',
   standalone: true,
-  imports: [NgFor, NgIf, NgStyle, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './password.component.html',
   styleUrl: './password.component.css',
 })
