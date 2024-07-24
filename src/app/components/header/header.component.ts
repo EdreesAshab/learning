@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { InitialCircleComponent } from '../initial-circle/initial-circle.component';
+import { RouterLink, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ import { InitialCircleComponent } from '../initial-circle/initial-circle.compone
     MatToolbarModule,
     MatDividerModule,
     InitialCircleComponent,
+    RouterLink,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
