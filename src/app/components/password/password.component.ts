@@ -15,6 +15,8 @@ export class PasswordComponent {
   userName: string = 'edrees15';
   email: string = 'edrees@email.com';
   invalidRules: Rule[] = [];
+  isHidden: string = 'password';
+  showPasswordBtn: string = 'Show Password';
 
   rules: Rule[] = [
     {
@@ -74,5 +76,15 @@ export class PasswordComponent {
     }
 
     return this.invalidRules.length === 0;
+  }
+
+  toggleShowPassword() {
+    if (this.isHidden === 'password') {
+      this.isHidden = 'text';
+      this.showPasswordBtn = 'Hide Password';
+    } else if (this.isHidden === 'text') {
+      this.isHidden = 'password';
+      this.showPasswordBtn = 'Show Password';
+    }
   }
 }
