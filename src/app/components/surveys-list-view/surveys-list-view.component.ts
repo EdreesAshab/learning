@@ -143,10 +143,6 @@ export class SurveysListViewComponent {
   }
 
   getParsedPeriods(periodStr: string): Period[] {
-    // if (this.survey.SurveyPeriods)
-    //   this.surveyPeriods = JSON.parse(this.survey.SurveyPeriods);
-    const periods: Period[] = JSON.parse(periodStr);
-    // console.log(`periods: ${JSON.stringify(periods[0])}`);
-    return periods;
+    return JSON.parse(periodStr);
   }
 }

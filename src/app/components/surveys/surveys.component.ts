@@ -14,6 +14,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
 import { SurveyItemComponent } from '../survey-item/survey-item.component';
 import { SurveyDialogComponent } from '../survey-dialog/survey-dialog.component';
@@ -24,6 +25,7 @@ import { DataService } from '../../services/data.service';
 
 import { Period, Survey } from '../../types';
 import { UiService } from '../../services/ui.service';
+import { DatePeriodPickerComponent } from "../date-period-picker/date-period-picker.component";
 
 @Component({
   selector: 'app-surveys',
@@ -40,10 +42,12 @@ import { UiService } from '../../services/ui.service';
     MatFormFieldModule,
     MatTableModule,
     MatSortModule,
+    MatMenuModule,
     SurveyItemComponent,
     SurveysListViewComponent,
     SurveysGridViewComponent,
-  ],
+    DatePeriodPickerComponent
+],
   templateUrl: './surveys.component.html',
   styleUrl: './surveys.component.css',
 })
@@ -76,6 +80,7 @@ export class SurveysComponent {
   readonly dialog = inject(MatDialog);
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatMenu) menu!: MatMenu;
 
   dataSource: MatTableDataSource<Survey>;
 

@@ -27,7 +27,15 @@
         (input)="getCurrentSurveys()"
         [(ngModel)]="searchName"
       />
-      <button class="btn unfilledBtn">Filter</button>
+      <button mat-button class="btn unfilledBtn" [matMenuTriggerFor]="menu">
+        Filter
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <app-date-period-picker></app-date-period-picker>
+        <button mat-button class="btn unfilledBtn">Clear</button>
+        <button mat-button class="btn filledBtn">Apply</button>
+      </mat-menu>
     </div>
   </mat-toolbar>
 
