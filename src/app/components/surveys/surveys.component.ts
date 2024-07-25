@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input, signal, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -10,12 +10,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 
 import { SurveyItemComponent } from '../survey-item/survey-item.component';
+import { SurveyDialogComponent } from '../survey-dialog/survey-dialog.component';
+import { SurveysListViewComponent } from '../surveys-list-view/surveys-list-view.component';
+import { SurveysGridViewComponent } from '../surveys-grid-view/surveys-grid-view.component';
+
+import { DataService } from '../../services/data.service';
 
 import { Survey } from '../../types';
-
-import data from '../../../../db.json';
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-surveys',
@@ -29,13 +37,18 @@ import data from '../../../../db.json';
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatSortModule,
     SurveyItemComponent,
+    SurveysListViewComponent,
+    SurveysGridViewComponent,
   ],
   templateUrl: './surveys.component.html',
   styleUrl: './surveys.component.css',
 })
 export class SurveysComponent {
-  surveys: Survey[] = data.surveys;
+  surveys: Survey[];
 
   publishedSurveys: Survey[] = [];
   expiredSurveys: Survey[] = [];
@@ -45,7 +58,7 @@ export class SurveysComponent {
 
   searchedSurveys: Survey[];
 
-  selectedSurvey: Survey | null = null;
+  @Input() selectedSurvey: Survey | null = null;
 
   @Input() search: string = '';
 
@@ -59,29 +72,50 @@ export class SurveysComponent {
 
   showSurveyDialog: boolean = false;
 
-  ngOnInit() {
-    for (let survey of this.surveys) {
-      if (survey.SURVEY_STATUS_EN === 'Published') {
-        this.publishedSurveys.push(survey);
-      } else if (survey.SURVEY_STATUS_EN === 'Expired') {
-        this.expiredSurveys.push(survey);
-      } else if (survey.SURVEY_STATUS_EN === 'Closed') {
-        this.closedSurveys.push(survey);
-      }
-    }
+  selectedView: string = 'list';
 
-    this.getCurrentSurveys();
+  readonly SurveyName = signal('');
+  readonly dialog = inject(MatDialog);
+
+  @ViewChild(MatSort) sort: MatSort;
+
+  dataSource: MatTableDataSource<Survey>;
+
+  constructor(private dataService: DataService, private uiService: UiService) {}
+
+  ngOnInit() {
+    this.subscription = this.uiService.value$.subscribe((newSelectedSurvey) => {
+      this.selectedSurvey = newSelectedSurvey;
+    });
+
+    this.dataService.getData().subscribe((surveys) => {
+      this.surveys = surveys;
+
+      for (let survey of this.surveys) {
+        if (survey.SURVEY_STATUS_EN === 'Published') {
+          this.publishedSurveys.push(survey);
+        } else if (survey.SURVEY_STATUS_EN === 'Expired') {
+          this.expiredSurveys.push(survey);
+        } else if (survey.SURVEY_STATUS_EN === 'Closed') {
+          this.closedSurveys.push(survey);
+        }
+      }
+
+      this.getCurrentSurveys();
+    });
   }
 
   handlePageEvent(pageEvent: PageEvent): void {
     this.currentPage = pageEvent.pageIndex;
     this.pageSize = pageEvent.pageSize;
     this.selectedSurvey = null;
+    this.uiService.updateSelectedSurvey(null);
     this.getCurrentSurveys();
   }
 
   searchByName(surveyStatus: string): void {
     this.selectedSurvey = null;
+    this.uiService.updateSelectedSurvey(null);
     this.searchedSurveys = [];
     this.searchedSurveys = this.surveys.filter(
       (survey) =>
@@ -141,17 +175,16 @@ export class SurveysComponent {
         this.activeTabSurveysLength = this.surveys.length;
       }
     }
+
+    this.dataSource = new MatTableDataSource(this.currentSurveys);
   }
 
   handleTabChangeEvent(tabChangeEvent: MatTabChangeEvent): void {
     this.tabIndex = tabChangeEvent.index;
     this.currentPage = 0;
     this.selectedSurvey = null;
+    this.uiService.updateSelectedSurvey(null);
     this.getCurrentSurveys();
-  }
-
-  selectSurvey(survey: Survey, event: Event): void {
-    this.selectedSurvey = survey;
   }
 
   toggleSurveyDialog(): void {
@@ -166,5 +199,80 @@ export class SurveysComponent {
         `Go to selected Survey: ${this.selectedSurvey?.SRV_ID} - ${this.selectedSurvey?.SurveyNameEn}`
       );
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(SurveyDialogComponent, {
+      data: {
+        ...this.selectedSurvey,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result && result.length >= 4) {
+        this.SurveyName.set(result.trim());
+
+        this.surveys.forEach((survey) => {
+          if (survey.SRV_ID === this.selectedSurvey!.SRV_ID) {
+            this.selectedSurvey!.SurveyName = this.SurveyName();
+            this.updateSurvey(this.selectedSurvey!);
+            this.getCurrentSurveys();
+          }
+        });
+        this.selectedSurvey = null;
+        this.uiService.updateSelectedSurvey(null);
+      } else if (result && result.length < 4) {
+        alert('The new name should be at least 4 characters');
+        this.openDialog();
+      } else {
+        this.selectedSurvey = null;
+        this.uiService.updateSelectedSurvey(null);
+      }
+    });
+  }
+
+  updateSurvey(survey: Survey) {
+    this.dataService.updateItem(survey).subscribe({
+      next: (response) => {
+        console.log(`Survey name updated successfully: ${response}`);
+        const index = this.surveys.findIndex(
+          (item) => item.SRV_ID === survey.SRV_ID
+        );
+        if (index !== -1) {
+          this.surveys[index] = survey;
+        }
+      },
+      error: (error) => {
+        console.error('Error updating item:', error);
+      },
+    });
+  }
+
+  displayedColumns: string[] = ['surveyName', 'from', 'to', 'period'];
+
+  getStartDateString(date: string): string {
+    return JSON.parse(date)[0].START_DATE.substr(
+      0,
+      JSON.parse(date)[0].START_DATE.indexOf('T')
+    );
+  }
+
+  getEndDateString(date: string): string {
+    return JSON.parse(date)[0].END_DATE.substr(
+      0,
+      JSON.parse(date)[0].END_DATE.indexOf('T')
+    );
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
+  handleViewTabChangeEvent(tabChangeEvent: MatTabChangeEvent): void {
+    if (tabChangeEvent.index === 0) this.selectedView = 'list';
+    else if (tabChangeEvent.index === 1) this.selectedView = 'grid';
+
+    this.selectedSurvey = null;
+    this.uiService.updateSelectedSurvey(null);
   }
 }

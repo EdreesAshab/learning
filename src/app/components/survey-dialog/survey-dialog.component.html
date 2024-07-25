@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>SURVEY</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Survey Name</mat-label>
+    <input matInput [(ngModel)]="SurveyName" />
+  </mat-form-field>
+  <p>SRV_ID: {{ data.SRV_ID }}</p>
+  <p>SurveyNameAr: {{ data.SurveyNameAr }}</p>
+  <p>SurveyPeriods: {{ data.SurveyPeriods }}</p>
+  <p>SURVEY_STATUS_AR: {{ data.SURVEY_STATUS_AR }}</p>
+  <p>SURVEY_STATUS_EN: {{ data.SURVEY_STATUS_EN }}</p>
+  <p>TEMPLATE_ID: {{ data.TEMPLATE_ID }}</p>
+  <p>TemplateName: {{ data.TemplateName }}</p>
+  <p>TemplateNameAr: {{ data.TemplateNameAr }}</p>
+  <p>TemplateNameEn: {{ data.TemplateNameEn }}</p>
+  <p>SystemType: {{ data.SystemType }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="SurveyName()" cdkFocusInitial>
+    Ok
+  </button>
+</mat-dialog-actions>

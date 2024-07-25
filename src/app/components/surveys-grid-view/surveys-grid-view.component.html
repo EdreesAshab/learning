@@ -1,0 +1,9 @@
+<mat-grid-list cols="3" rowHeight="2:1" gutterSize="20px">
+  <mat-grid-tile *ngFor="let survey of surveys"
+    ><app-survey-item
+      [survey]="survey"
+      (click)="selectSurvey(survey)"
+      [isSelected]="isSelected(survey.SRV_ID)"
+    ></app-survey-item
+  ></mat-grid-tile>
+</mat-grid-list>
