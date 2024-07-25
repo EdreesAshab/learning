@@ -29,6 +29,24 @@
       *matCellDef="let row"
       [ngClass]="{ selectedSurvey: isSelected(row.SRV_ID) }"
     >
+      <mat-icon
+        [fontIcon]="'check'"
+        style="color: #02ca98"
+        *ngIf="row.SURVEY_STATUS_EN === 'Published'"
+      ></mat-icon>
+
+      <mat-icon
+        [fontIcon]="'alarm'"
+        style="color: #8d8d8d"
+        *ngIf="row.SURVEY_STATUS_EN === 'Expired'"
+      ></mat-icon>
+
+      <mat-icon
+        [fontIcon]="'lock'"
+        style="color: #8d8d8d"
+        *ngIf="row.SURVEY_STATUS_EN === 'Closed'"
+      ></mat-icon>
+
       {{ row.SurveyName }}
     </td>
   </ng-container>
@@ -66,11 +84,15 @@
       [ngClass]="{ selectedRightSurvey: isSelected(row.SRV_ID) }"
     >
       <mat-form-field
-        *ngIf="row.SurveyPeriods && checkIfNotOneDate(row.SurveyPeriods)"
+        *ngIf="
+          row.SurveyPeriods &&
+          row.SurveyPeriods.length > 1 &&
+          checkIfNotOneDate(row.SurveyPeriods)
+        "
       >
         <mat-label>Select Period</mat-label>
         <mat-select>
-          @for (period of row.SurveyPeriods; track period) {
+          @for (period of getParsedPeriods(row.SurveyPeriods); track $index) {
           <mat-option [value]="period"
             >{{ getStartDateString(row.SurveyPeriods).replaceAll("-", "/") }}
             -

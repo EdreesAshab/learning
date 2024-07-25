@@ -23,9 +23,9 @@
         matInput
         placeholder="Search survey name"
         class="searchInput"
-        name="search"
+        name="searchName"
         (input)="getCurrentSurveys()"
-        [(ngModel)]="search"
+        [(ngModel)]="searchName"
       />
       <button class="btn unfilledBtn">Filter</button>
     </div>
@@ -34,22 +34,12 @@
   <!-- Main section -->
   <div>
     <!-- No Surveys -->
-    <p
-      *ngIf="
-        (search === '' && currentSurveys && currentSurveys.length === 0) ||
-        (search !== '' && searchedSurveys && searchedSurveys.length === 0)
-      "
-    >
+    <p *ngIf="currentSurveys && currentSurveys.length === 0">
       NO RESULTS FOUND
     </p>
 
     <!-- Surveys -->
-    <div
-      *ngIf="
-        (search === '' && currentSurveys && currentSurveys.length !== 0) ||
-        (search !== '' && searchedSurveys && searchedSurveys.length !== 0)
-      "
-    >
+    <div *ngIf="currentSurveys && currentSurveys.length !== 0">
       <!-- Survey View Tab -->
       <mat-tab-group (selectedTabChange)="handleViewTabChangeEvent($event)">
         <mat-tab>

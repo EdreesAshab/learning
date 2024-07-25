@@ -2,7 +2,7 @@ import { Component, ViewChild, Input, SimpleChanges } from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { CommonModule } from '@angular/common';
-import { Survey } from '../../types';
+import { Period, Survey } from '../../types';
 
 import { FormsModule } from '@angular/forms';
 
@@ -140,5 +140,13 @@ export class SurveysListViewComponent {
 
   compare(a: number | string, b: number | string, isAsc: boolean) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  getParsedPeriods(periodStr: string): Period[] {
+    // if (this.survey.SurveyPeriods)
+    //   this.surveyPeriods = JSON.parse(this.survey.SurveyPeriods);
+    const periods: Period[] = JSON.parse(periodStr);
+    // console.log(`periods: ${JSON.stringify(periods[0])}`);
+    return periods;
   }
 }

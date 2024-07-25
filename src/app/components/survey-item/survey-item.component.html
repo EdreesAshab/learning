@@ -23,7 +23,7 @@
   <mat-form-field *ngIf="surveyPeriods.length > 1">
     <mat-label>Select Period</mat-label>
     <mat-select (selectionChange)="changePeriod($event.value)">
-      @for (period of surveyPeriods; track period) {
+      @for (period of surveyPeriods; track $index) {
       <mat-option [value]="period"
         >{{
           period.START_DATE.substr(

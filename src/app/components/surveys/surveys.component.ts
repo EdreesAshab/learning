@@ -22,7 +22,7 @@ import { SurveysGridViewComponent } from '../surveys-grid-view/surveys-grid-view
 
 import { DataService } from '../../services/data.service';
 
-import { Survey } from '../../types';
+import { Period, Survey } from '../../types';
 import { UiService } from '../../services/ui.service';
 
 @Component({
@@ -50,23 +50,21 @@ import { UiService } from '../../services/ui.service';
 export class SurveysComponent {
   surveys: Survey[];
 
-  publishedSurveys: Survey[] = [];
-  expiredSurveys: Survey[] = [];
-  closedSurveys: Survey[] = [];
+  currentSurveys: Survey[] = [];
 
-  currentSurveys: Survey[];
+  filteredSurveys: Survey[] = [];
 
-  searchedSurveys: Survey[];
+  selectedStatus: string = 'Published';
+  selectedDatePeriod: Period;
+  @Input() searchName: string = '';
 
   @Input() selectedSurvey: Survey | null = null;
-
-  @Input() search: string = '';
 
   currentPage: number = 0;
   pageSize: number = 10;
   tabIndex: number = 0;
 
-  activeTabSurveysLength = this.publishedSurveys.length;
+  activeTabSurveysLength = 0;
 
   subscription: Subscription;
 
@@ -91,16 +89,6 @@ export class SurveysComponent {
     this.dataService.getData().subscribe((surveys) => {
       this.surveys = surveys;
 
-      for (let survey of this.surveys) {
-        if (survey.SURVEY_STATUS_EN === 'Published') {
-          this.publishedSurveys.push(survey);
-        } else if (survey.SURVEY_STATUS_EN === 'Expired') {
-          this.expiredSurveys.push(survey);
-        } else if (survey.SURVEY_STATUS_EN === 'Closed') {
-          this.closedSurveys.push(survey);
-        }
-      }
-
       this.getCurrentSurveys();
     });
   }
@@ -111,17 +99,6 @@ export class SurveysComponent {
     this.selectedSurvey = null;
     this.uiService.updateSelectedSurvey(null);
     this.getCurrentSurveys();
-  }
-
-  searchByName(surveyStatus: string): void {
-    this.selectedSurvey = null;
-    this.uiService.updateSelectedSurvey(null);
-    this.searchedSurveys = [];
-    this.searchedSurveys = this.surveys.filter(
-      (survey) =>
-        survey.SurveyName.toLowerCase().includes(this.search.toLowerCase()) &&
-        (surveyStatus === '' || survey.SURVEY_STATUS_EN === surveyStatus)
-    );
   }
 
   copySurveys(surveysArray: Survey[]): void {
@@ -135,48 +112,12 @@ export class SurveysComponent {
   }
 
   getCurrentSurveys(): void {
+    this.applyFilters();
+
     this.currentSurveys = [];
-    this.searchedSurveys = [];
 
-    if (this.tabIndex === 0) {
-      if (this.search !== '') {
-        this.searchByName('Published');
-        this.copySurveys(this.searchedSurveys);
-        this.activeTabSurveysLength = this.searchedSurveys.length;
-      } else {
-        this.copySurveys(this.publishedSurveys);
-        this.activeTabSurveysLength = this.publishedSurveys.length;
-      }
-    } else if (this.tabIndex === 1) {
-      if (this.search !== '') {
-        this.searchByName('Expired');
-        this.copySurveys(this.searchedSurveys);
-        this.activeTabSurveysLength = this.searchedSurveys.length;
-      } else {
-        this.copySurveys(this.expiredSurveys);
-        this.activeTabSurveysLength = this.expiredSurveys.length;
-      }
-    } else if (this.tabIndex === 2) {
-      if (this.search !== '') {
-        this.searchByName('Closed');
-        this.copySurveys(this.searchedSurveys);
-        this.activeTabSurveysLength = this.searchedSurveys.length;
-      } else {
-        this.copySurveys(this.closedSurveys);
-        this.activeTabSurveysLength = this.closedSurveys.length;
-      }
-    } else if (this.tabIndex === 3) {
-      if (this.search !== '') {
-        this.searchByName('');
-        this.copySurveys(this.searchedSurveys);
-        this.activeTabSurveysLength = this.searchedSurveys.length;
-      } else {
-        this.copySurveys(this.surveys);
-        this.activeTabSurveysLength = this.surveys.length;
-      }
-    }
-
-    this.dataSource = new MatTableDataSource(this.currentSurveys);
+    this.copySurveys(this.filteredSurveys);
+    this.activeTabSurveysLength = this.filteredSurveys.length;
   }
 
   handleTabChangeEvent(tabChangeEvent: MatTabChangeEvent): void {
@@ -184,21 +125,13 @@ export class SurveysComponent {
     this.currentPage = 0;
     this.selectedSurvey = null;
     this.uiService.updateSelectedSurvey(null);
-    this.getCurrentSurveys();
-  }
 
-  toggleSurveyDialog(): void {
-    if (
-      this.selectedSurvey?.SurveyPeriods &&
-      JSON.parse(this.selectedSurvey.SurveyPeriods).length > 1 &&
-      !this.selectedSurvey?.SelectedPeriod
-    ) {
-      alert('Please select a period');
-    } else {
-      alert(
-        `Go to selected Survey: ${this.selectedSurvey?.SRV_ID} - ${this.selectedSurvey?.SurveyNameEn}`
-      );
-    }
+    if (this.tabIndex === 0) this.selectedStatus = 'Published';
+    else if (this.tabIndex === 1) this.selectedStatus = 'Expired';
+    else if (this.tabIndex === 2) this.selectedStatus = 'Closed';
+    else if (this.tabIndex === 3) this.selectedStatus = '';
+
+    this.getCurrentSurveys();
   }
 
   openDialog(): void {
@@ -219,6 +152,7 @@ export class SurveysComponent {
             this.getCurrentSurveys();
           }
         });
+
         this.selectedSurvey = null;
         this.uiService.updateSelectedSurvey(null);
       } else if (result && result.length < 4) {
@@ -248,22 +182,6 @@ export class SurveysComponent {
     });
   }
 
-  displayedColumns: string[] = ['surveyName', 'from', 'to', 'period'];
-
-  getStartDateString(date: string): string {
-    return JSON.parse(date)[0].START_DATE.substr(
-      0,
-      JSON.parse(date)[0].START_DATE.indexOf('T')
-    );
-  }
-
-  getEndDateString(date: string): string {
-    return JSON.parse(date)[0].END_DATE.substr(
-      0,
-      JSON.parse(date)[0].END_DATE.indexOf('T')
-    );
-  }
-
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
@@ -274,5 +192,44 @@ export class SurveysComponent {
 
     this.selectedSurvey = null;
     this.uiService.updateSelectedSurvey(null);
+  }
+
+  applyFilters() {
+    this.filteredSurveys = this.surveys.filter(
+      (survey) =>
+        this.filterByStatus(survey) &&
+        this.filterByName(survey) &&
+        this.filterByDatePeriod(survey)
+    );
+  }
+
+  filterByStatus(survey: Survey): boolean {
+    return (
+      !this.selectedStatus || survey.SURVEY_STATUS_EN === this.selectedStatus
+    );
+  }
+
+  filterByDatePeriod(survey: Survey): boolean {
+    if (
+      !this.selectedDatePeriod ||
+      !this.selectedDatePeriod.START_DATE ||
+      !this.selectedDatePeriod.END_DATE
+    )
+      return true;
+
+    const surveyStartDate = new Date(survey.SelectedPeriod!.START_DATE);
+    const surveyEndDate = new Date(survey.SelectedPeriod!.END_DATE);
+
+    const startDate = new Date(this.selectedDatePeriod.START_DATE);
+    const endDate = new Date(this.selectedDatePeriod.END_DATE);
+
+    return surveyStartDate >= startDate && surveyEndDate <= endDate;
+  }
+
+  filterByName(survey: Survey): boolean {
+    return (
+      !this.searchName ||
+      survey.SurveyName.toLowerCase().includes(this.searchName.toLowerCase())
+    );
   }
 }
