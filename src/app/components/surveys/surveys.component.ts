@@ -16,7 +16,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
-import { SurveyItemComponent } from '../survey-item/survey-item.component';
+import { SurveyGridViewItemComponent } from '../survey-grid-view-item/survey-grid-view-item.component';
 import { SurveyDialogComponent } from '../survey-dialog/survey-dialog.component';
 import { SurveysListViewComponent } from '../surveys-list-view/surveys-list-view.component';
 import { SurveysGridViewComponent } from '../surveys-grid-view/surveys-grid-view.component';
@@ -25,7 +25,7 @@ import { DataService } from '../../services/data.service';
 
 import { Period, Survey } from '../../types';
 import { UiService } from '../../services/ui.service';
-import { DatePeriodPickerComponent } from "../date-period-picker/date-period-picker.component";
+import { DatePeriodPickerComponent } from '../date-period-picker/date-period-picker.component';
 
 @Component({
   selector: 'app-surveys',
@@ -43,11 +43,11 @@ import { DatePeriodPickerComponent } from "../date-period-picker/date-period-pic
     MatTableModule,
     MatSortModule,
     MatMenuModule,
-    SurveyItemComponent,
+    SurveyGridViewItemComponent,
     SurveysListViewComponent,
     SurveysGridViewComponent,
-    DatePeriodPickerComponent
-],
+    DatePeriodPickerComponent,
+  ],
   templateUrl: './surveys.component.html',
   styleUrl: './surveys.component.css',
 })
@@ -125,6 +125,11 @@ export class SurveysComponent {
     this.activeTabSurveysLength = this.filteredSurveys.length;
   }
 
+  searchByName(): void {
+    this.currentPage = 0;
+    this.getCurrentSurveys();
+  }
+
   handleTabChangeEvent(tabChangeEvent: MatTabChangeEvent): void {
     this.tabIndex = tabChangeEvent.index;
     this.currentPage = 0;
@@ -187,7 +192,7 @@ export class SurveysComponent {
     });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
   }
 
@@ -199,7 +204,7 @@ export class SurveysComponent {
     this.uiService.updateSelectedSurvey(null);
   }
 
-  applyFilters() {
+  applyFilters(): void {
     this.filteredSurveys = this.surveys.filter(
       (survey) =>
         this.filterByStatus(survey) &&

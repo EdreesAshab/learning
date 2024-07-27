@@ -59,7 +59,13 @@
       *matCellDef="let row"
       [ngClass]="{ selectedSurvey: isSelected(row.SRV_ID) }"
     >
-      {{ getStartDateString(row.SurveyPeriods) }}
+      <p *ngIf="row.SelectedPeriod">
+        {{ getStartDateString(row.SelectedPeriod) }}
+      </p>
+
+      <p *ngIf="row.SurveyPeriods && !checkIfNotOneDate(row.SurveyPeriods)">
+        {{ getStartDateString(row.SurveyPeriods) }}
+      </p>
     </td>
   </ng-container>
 
@@ -71,7 +77,13 @@
       *matCellDef="let row"
       [ngClass]="{ selectedSurvey: isSelected(row.SRV_ID) }"
     >
-      {{ getEndDateString(row.SurveyPeriods) }}
+      <p *ngIf="row.SelectedPeriod">
+        {{ getEndDateString(row.SelectedPeriod) }}
+      </p>
+
+      <p *ngIf="row.SurveyPeriods && !checkIfNotOneDate(row.SurveyPeriods)">
+        {{ getEndDateString(row.SurveyPeriods) }}
+      </p>
     </td>
   </ng-container>
 
@@ -84,21 +96,15 @@
       [ngClass]="{ selectedRightSurvey: isSelected(row.SRV_ID) }"
     >
       <mat-form-field
-        *ngIf="
-          row.SurveyPeriods &&
-          row.SurveyPeriods.length > 1 &&
-          checkIfNotOneDate(row.SurveyPeriods)
-        "
+        *ngIf="row.SurveyPeriods && checkIfNotOneDate(row.SurveyPeriods)"
       >
         <mat-label>Select Period</mat-label>
-        <mat-select>
+        <mat-select (selectionChange)="changePeriod($event.value, row)">
           @for (period of getParsedPeriods(row.SurveyPeriods); track $index) {
           <mat-option [value]="period"
-            >{{ getStartDateString(row.SurveyPeriods).replaceAll("-", "/") }}
+            >{{ getStartDateString(period).replaceAll("-", "/") }}
             -
-            {{
-              getEndDateString(row.SurveyPeriods).replaceAll("-", "/")
-            }}</mat-option
+            {{ getEndDateString(period).replaceAll("-", "/") }}</mat-option
           >
           }
         </mat-select>

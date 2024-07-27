@@ -24,7 +24,7 @@
         placeholder="Search survey name"
         class="searchInput"
         name="searchName"
-        (input)="getCurrentSurveys()"
+        (input)="searchByName()"
         [(ngModel)]="searchName"
       />
       <button mat-button class="btn unfilledBtn" [matMenuTriggerFor]="menu">
