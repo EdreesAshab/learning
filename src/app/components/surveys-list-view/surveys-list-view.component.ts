@@ -75,20 +75,32 @@ export class SurveysListViewComponent {
     return JSON.parse(date).length !== 1;
   }
 
-  getStartDateString(date: string | null): string {
+  getStartDateString(date: string | Period | null): string {
     if (date === null) return '';
-    return JSON.parse(date)[0].START_DATE.substr(
-      0,
-      JSON.parse(date)[0].START_DATE.indexOf('T')
-    );
+
+    if (typeof date === 'object') {
+      return date.START_DATE.substr(0, date.START_DATE.indexOf('T'));
+    } else if (Array.isArray(JSON.parse(date)))
+      return JSON.parse(date)[0].START_DATE.substr(
+        0,
+        JSON.parse(date)[0].START_DATE.indexOf('T')
+      );
+
+    return '';
   }
 
-  getEndDateString(date: string | null): string {
+  getEndDateString(date: string | Period | null): string {
     if (date === null) return '';
-    return JSON.parse(date)[0].END_DATE.substr(
-      0,
-      JSON.parse(date)[0].END_DATE.indexOf('T')
-    );
+
+    if (typeof date === 'object') {
+      return date.END_DATE.substr(0, date.END_DATE.indexOf('T'));
+    } else if (Array.isArray(JSON.parse(date)))
+      return JSON.parse(date)[0].END_DATE.substr(
+        0,
+        JSON.parse(date)[0].END_DATE.indexOf('T')
+      );
+
+    return '';
   }
 
   ngAfterViewInit() {
@@ -144,5 +156,9 @@ export class SurveysListViewComponent {
 
   getParsedPeriods(periodStr: string): Period[] {
     return JSON.parse(periodStr);
+  }
+
+  changePeriod(period: Period, survey: Survey): void {
+    survey.SelectedPeriod = period;
   }
 }

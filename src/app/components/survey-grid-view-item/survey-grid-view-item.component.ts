@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Survey, Period } from '../../types';
 
 @Component({
-  selector: 'app-survey-item',
+  selector: 'app-survey-grid-view-item',
   standalone: true,
   imports: [
     CommonModule,
@@ -22,10 +22,10 @@ import { Survey, Period } from '../../types';
     MatInputModule,
     MatSelectModule,
   ],
-  templateUrl: './survey-item.component.html',
-  styleUrl: './survey-item.component.css',
+  templateUrl: './survey-grid-view-item.component.html',
+  styleUrl: './survey-grid-view-item.component.css',
 })
-export class SurveyItemComponent {
+export class SurveyGridViewItemComponent {
   @Input() survey: Survey;
   @Input() isSelected: boolean;
   surveyIcon = 'check';

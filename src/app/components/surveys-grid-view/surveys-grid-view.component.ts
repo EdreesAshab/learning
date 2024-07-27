@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 
-import { SurveyItemComponent } from '../survey-item/survey-item.component';
+import { SurveyGridViewItemComponent } from '../survey-grid-view-item/survey-grid-view-item.component';
 import { Survey } from '../../types';
 import { UiService } from '../../services/ui.service';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-surveys-grid-view',
   standalone: true,
-  imports: [CommonModule, MatGridListModule, SurveyItemComponent],
+  imports: [CommonModule, MatGridListModule, SurveyGridViewItemComponent],
   templateUrl: './surveys-grid-view.component.html',
   styleUrl: './surveys-grid-view.component.css',
 })
