@@ -14,11 +14,15 @@ export class UiService {
   private filterPeriodSubject = new BehaviorSubject<Period | null>(null);
   private sortSubject = new BehaviorSubject<Sort | null>(null);
   private currentPageSubject = new BehaviorSubject<number>(0);
+  private languageSubject = new BehaviorSubject<string>('Ar');
 
   selectedSurvey$ = this.selectedSurveySubject.asObservable();
   filterPeriod$ = this.filterPeriodSubject.asObservable();
   sort$ = this.sortSubject.asObservable();
   currentPage$ = this.currentPageSubject.asObservable();
+  language$ = this.languageSubject.asObservable();
+
+  currentLanguage: string = 'Ar';
 
   constructor() {}
 
@@ -36,5 +40,11 @@ export class UiService {
 
   setCurrentPage(currentPage: number): void {
     this.currentPageSubject.next(currentPage);
+  }
+
+  toggleLanguage(): void {
+    if (this.currentLanguage === 'Ar') this.currentLanguage = 'En';
+    else this.currentLanguage = 'Ar';
+    this.languageSubject.next(this.currentLanguage);
   }
 }

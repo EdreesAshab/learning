@@ -13,7 +13,7 @@
     ></mat-icon>
   </div>
 
-  <mat-card-content>{{ survey.SurveyName }}</mat-card-content>
+  <mat-card-content>{{ survey | language : "Name" }}</mat-card-content>
 
   <hr
     *ngIf="surveyPeriods.length > 0"

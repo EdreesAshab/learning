@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
 import { Survey, Period } from '../../types';
+import { LanguagePipe } from '../../pipes/language.pipe';
 
 @Component({
   selector: 'app-survey-grid-view-item',
@@ -21,6 +22,7 @@ import { Survey, Period } from '../../types';
     MatIconModule,
     MatInputModule,
     MatSelectModule,
+    LanguagePipe,
   ],
   templateUrl: './survey-grid-view-item.component.html',
   styleUrl: './survey-grid-view-item.component.css',

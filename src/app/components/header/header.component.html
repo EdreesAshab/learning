@@ -25,5 +25,7 @@
     <hr style="height: 35px; border: 1px solid #e8e8e8" />
   </div>
 
-  <button mat-button>العربية</button>
+  <button mat-button (click)="toggleLanguage()">
+    {{ "العربية" | language : "langs" : "language" }}
+  </button>
 </mat-toolbar>

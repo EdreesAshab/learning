@@ -26,6 +26,7 @@ import { DataService } from '../../services/data.service';
 import { UiService } from '../../services/ui.service';
 
 import { Period, Survey } from '../../types';
+import { LanguagePipe } from '../../pipes/language.pipe';
 
 @Component({
   selector: 'app-surveys',
@@ -47,6 +48,7 @@ import { Period, Survey } from '../../types';
     SurveysListViewComponent,
     SurveysGridViewComponent,
     DatePeriodPickerComponent,
+    LanguagePipe,
   ],
   templateUrl: './surveys.component.html',
   styleUrl: './surveys.component.css',
@@ -80,6 +82,8 @@ export class SurveysComponent {
 
   readonly SurveyName = signal('');
   readonly dialog = inject(MatDialog);
+
+  language: string = 'Ar';
 
   sort: Sort;
 

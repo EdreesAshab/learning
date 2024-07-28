@@ -16,7 +16,7 @@
         [disabled]="selectedSurvey === null"
         (click)="openDialog()"
       >
-        Go to Dashboard
+        {{ "Go to Dashboard" | language : "langs" : "dashboard" }}
       </button>
       <input
         type="text"
@@ -28,7 +28,7 @@
         [(ngModel)]="searchName"
       />
       <button mat-button class="btn unfilledBtn" [matMenuTriggerFor]="menu">
-        Filter
+        {{ "Filter" | language : "langs" : "filter" }}
       </button>
 
       <mat-menu #menu="matMenu">
@@ -43,7 +43,7 @@
   <div>
     <!-- No Surveys -->
     <p *ngIf="currentSurveys && currentSurveys.length === 0">
-      NO RESULTS FOUND
+      {{ "NO RESULTS FOUND" | language : "langs" : "noResults" }}
     </p>
 
     <!-- Surveys -->

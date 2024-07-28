@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { UiService } from '../../services/ui.service';
 import { Subscription } from 'rxjs';
+import { LanguagePipe } from '../../pipes/language.pipe';
 
 @Component({
   selector: 'app-surveys-list-view',
@@ -29,6 +30,7 @@ import { Subscription } from 'rxjs';
     MatSelectModule,
     MatSortModule,
     MatRadioModule,
+    LanguagePipe,
   ],
   templateUrl: './surveys-list-view.component.html',
   styleUrl: './surveys-list-view.component.css',

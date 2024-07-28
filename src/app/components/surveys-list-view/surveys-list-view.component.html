@@ -47,7 +47,7 @@
         *ngIf="row.SURVEY_STATUS_EN === 'Closed'"
       ></mat-icon>
 
-      {{ row.SurveyName }}
+      {{ row | language : "Name" }}
     </td>
   </ng-container>
 

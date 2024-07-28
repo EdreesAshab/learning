@@ -1,0 +1,16 @@
+{
+  "Ar": {
+    "language": "English",
+    "dashboard": "الشاشة الرئيسية",
+    "searchPlaceholder": "البحث عن استمارة",
+    "filter": "فلتر",
+    "noResults": "لم يتم العثور على نتائج"
+  },
+  "En": {
+    "language": "العربية",
+    "dashboard": "Go to Dashboard",
+    "searchPlaceholder": "Search survey name",
+    "filter": "Filter",
+    "noResults": "NO RESULTS FOUND"
+  }
+}
