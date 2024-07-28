@@ -17,8 +17,6 @@ import { Subscription } from 'rxjs';
 })
 export class SurveysGridViewComponent {
   @Input() surveys: Survey[];
-  @Output() selectSurveyEvent: EventEmitter<Survey> =
-    new EventEmitter<Survey>();
 
   selectedSurvey: Survey | null;
 
@@ -27,9 +25,11 @@ export class SurveysGridViewComponent {
   constructor(private uiService: UiService) {}
 
   ngOnInit() {
-    this.subscription = this.uiService.value$.subscribe((newSelectedSurvey) => {
-      this.selectedSurvey = newSelectedSurvey;
-    });
+    this.subscription = this.uiService.selectedSurvey$.subscribe(
+      (newSelectedSurvey) => {
+        this.selectedSurvey = newSelectedSurvey;
+      }
+    );
   }
 
   selectSurvey(survey: Survey): void {

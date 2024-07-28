@@ -1,5 +1,5 @@
 import { Component, ViewChild, Input, SimpleChanges } from '@angular/core';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { CommonModule } from '@angular/common';
 import { Period, Survey } from '../../types';
@@ -39,9 +39,6 @@ export class SurveysListViewComponent {
   @ViewChild(MatSort) sort: MatSort;
 
   @Input() surveys: Survey[];
-  dataSource: MatTableDataSource<Survey>;
-
-  sortedData: Survey[];
 
   selectedSurvey: Survey | null = null;
 
@@ -50,12 +47,11 @@ export class SurveysListViewComponent {
   constructor(private uiService: UiService) {}
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.surveys);
-    this.sortedData = this.surveys.slice();
-
-    this.subscription = this.uiService.value$.subscribe((newSelectedSurvey) => {
-      this.selectedSurvey = newSelectedSurvey;
-    });
+    this.subscription = this.uiService.selectedSurvey$.subscribe(
+      (newSelectedSurvey) => {
+        this.selectedSurvey = newSelectedSurvey;
+      }
+    );
   }
 
   selectSurvey(survey: Survey) {
@@ -103,55 +99,8 @@ export class SurveysListViewComponent {
     return '';
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['surveys'] && !changes['surveys'].firstChange) {
-      this.dataSource = new MatTableDataSource(this.surveys);
-      this.sortData(this.sort);
-    }
-  }
-
-  sortData(sort: Sort) {
-    const data = this.surveys.slice();
-    if (!sort.active || sort.direction === '') {
-      this.sortedData = data;
-      return;
-    }
-
-    this.sortedData = data.sort((a, b) => {
-      const isAsc = sort.direction === 'asc';
-      switch (sort.active) {
-        case 'surveyName':
-          return this.compare(
-            a.SurveyName.toLowerCase(),
-            b.SurveyName.toLowerCase(),
-            isAsc
-          );
-        case 'from':
-          return this.compare(
-            this.getStartDateString(a.SurveyPeriods!),
-            this.getStartDateString(b.SurveyPeriods!),
-            isAsc
-          );
-        case 'to':
-          return this.compare(
-            this.getEndDateString(a.SurveyPeriods!),
-            this.getEndDateString(b.SurveyPeriods!),
-            isAsc
-          );
-        default:
-          return 0;
-      }
-    });
-
-    this.dataSource = new MatTableDataSource(this.sortedData);
-  }
-
-  compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  sortData() {
+    this.uiService.setSort(this.sort);
   }
 
   getParsedPeriods(periodStr: string): Period[] {

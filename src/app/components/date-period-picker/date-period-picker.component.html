@@ -6,7 +6,10 @@
   </mat-date-range-input>
   <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
   <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-date-range-picker #picker></mat-date-range-picker>
+  <mat-date-range-picker
+    [dateClass]="dateClass"
+    #picker
+  ></mat-date-range-picker>
 
   @if (range.controls.start.hasError('matStartDateInvalid')) {
   <mat-error>Invalid start date</mat-error>
@@ -16,3 +19,10 @@
 </mat-form-field>
 
 <p>Selected range: {{ range.value | json }}</p>
+
+<button mat-button class="btn unfilledBtn" (click)="clearPeriodFilter()">
+  Clear
+</button>
+<button mat-button class="btn filledBtn" (click)="applyPeriodFilter()">
+  Apply
+</button>

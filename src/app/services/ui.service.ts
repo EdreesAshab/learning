@@ -1,22 +1,31 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { Survey } from '../types';
+import { Period, Survey } from '../types';
+import { Sort } from '@angular/material/sort';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UiService {
-  private subject = new BehaviorSubject<Survey | null>(null);
+  private selectedSurveySubject = new BehaviorSubject<Survey | null>(null);
+  private filterPeriodSubject = new BehaviorSubject<Period | null>(null);
+  private sortSubject = new BehaviorSubject<Sort | null>(null);
 
-  value$ = this.subject.asObservable();
+  selectedSurvey$ = this.selectedSurveySubject.asObservable();
+  filterPeriod$ = this.filterPeriodSubject.asObservable();
+  sort$ = this.sortSubject.asObservable();
 
   constructor() {}
 
   updateSelectedSurvey(newSelectedSurvey: Survey | null) {
-    this.subject.next(newSelectedSurvey);
+    this.selectedSurveySubject.next(newSelectedSurvey);
   }
 
-  getSelectedSurvey(): Observable<Survey | null> {
-    return of(this.subject.getValue());
+  selectFilterPeriod(selectedFilterPeriod: Period | null) {
+    this.filterPeriodSubject.next(selectedFilterPeriod);
+  }
+
+  setSort(sort: Sort) {
+    this.sortSubject.next(sort);
   }
 }

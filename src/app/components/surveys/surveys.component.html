@@ -32,9 +32,9 @@
       </button>
 
       <mat-menu #menu="matMenu">
-        <app-date-period-picker></app-date-period-picker>
-        <button mat-button class="btn unfilledBtn">Clear</button>
-        <button mat-button class="btn filledBtn">Apply</button>
+        <app-date-period-picker
+          [surveysPeriods]="surveysPeriods"
+        ></app-date-period-picker>
       </mat-menu>
     </div>
   </mat-toolbar>

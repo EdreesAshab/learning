@@ -11,8 +11,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
@@ -53,10 +53,12 @@ import { DatePeriodPickerComponent } from '../date-period-picker/date-period-pic
 })
 export class SurveysComponent {
   surveys: Survey[];
+  surveysPeriods: Period[] = [];
 
   currentSurveys: Survey[] = [];
 
   filteredSurveys: Survey[] = [];
+  sortedSurveys: Survey[] = [];
 
   selectedStatus: string = 'Published';
   selectedDatePeriod: Period;
@@ -79,20 +81,50 @@ export class SurveysComponent {
   readonly SurveyName = signal('');
   readonly dialog = inject(MatDialog);
 
-  @ViewChild(MatSort) sort: MatSort;
+  sort: Sort;
+
   @ViewChild(MatMenu) menu!: MatMenu;
 
-  dataSource: MatTableDataSource<Survey>;
+  selectedFilterPeriod: Period | null = null;
+
+  isSort: boolean = false;
 
   constructor(private dataService: DataService, private uiService: UiService) {}
 
   ngOnInit() {
-    this.subscription = this.uiService.value$.subscribe((newSelectedSurvey) => {
-      this.selectedSurvey = newSelectedSurvey;
+    this.subscription = this.uiService.selectedSurvey$.subscribe(
+      (newSelectedSurvey) => {
+        this.selectedSurvey = newSelectedSurvey;
+      }
+    );
+
+    this.subscription = this.uiService.filterPeriod$.subscribe(
+      (selectedFilterPeriod) => {
+        this.selectedFilterPeriod = selectedFilterPeriod;
+        this.getCurrentSurveys();
+      }
+    );
+
+    this.subscription = this.uiService.sort$.subscribe((sort) => {
+      if (sort) this.sort = sort;
+      if (sort?.active) {
+        this.isSort = true;
+        this.getCurrentSurveys();
+      }
     });
 
     this.dataService.getData().subscribe((surveys) => {
       this.surveys = surveys;
+      this.surveys.map((survey) => {
+        let periods: Period[] | null = null;
+        if (survey.SurveyPeriods) {
+          periods = JSON.parse(survey.SurveyPeriods);
+        }
+        if (survey.SurveyPeriods && periods && periods.length === 1) {
+          survey.SelectedPeriod = periods[0];
+          this.surveysPeriods.push(survey.SelectedPeriod);
+        }
+      });
 
       this.getCurrentSurveys();
     });
@@ -121,7 +153,15 @@ export class SurveysComponent {
 
     this.currentSurveys = [];
 
-    this.copySurveys(this.filteredSurveys);
+    if (this.isSort) {
+      this.sortData(this.sort);
+      this.copySurveys(this.sortedSurveys);
+    } else this.copySurveys(this.filteredSurveys);
+
+    console.log(`isSort: ${this.isSort}`);
+    console.log(JSON.stringify(this.sortedSurveys[0]));
+    console.log(JSON.stringify(this.filteredSurveys[0]));
+
     this.activeTabSurveysLength = this.filteredSurveys.length;
   }
 
@@ -192,10 +232,6 @@ export class SurveysComponent {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-  }
-
   handleViewTabChangeEvent(tabChangeEvent: MatTabChangeEvent): void {
     if (tabChangeEvent.index === 0) this.selectedView = 'list';
     else if (tabChangeEvent.index === 1) this.selectedView = 'grid';
@@ -221,17 +257,26 @@ export class SurveysComponent {
 
   filterByDatePeriod(survey: Survey): boolean {
     if (
-      !this.selectedDatePeriod ||
-      !this.selectedDatePeriod.START_DATE ||
-      !this.selectedDatePeriod.END_DATE
+      !this.selectedFilterPeriod ||
+      !this.selectedFilterPeriod.START_DATE ||
+      !this.selectedFilterPeriod.END_DATE
     )
       return true;
+
+    if (
+      !survey.SelectedPeriod &&
+      survey.SurveyPeriods &&
+      JSON.parse(survey.SurveyPeriods).length > 1
+    )
+      return false;
+
+    if (!survey.SelectedPeriod && !survey.SurveyPeriods) return true;
 
     const surveyStartDate = new Date(survey.SelectedPeriod!.START_DATE);
     const surveyEndDate = new Date(survey.SelectedPeriod!.END_DATE);
 
-    const startDate = new Date(this.selectedDatePeriod.START_DATE);
-    const endDate = new Date(this.selectedDatePeriod.END_DATE);
+    const startDate = new Date(this.selectedFilterPeriod.START_DATE);
+    const endDate = new Date(this.selectedFilterPeriod.END_DATE);
 
     return surveyStartDate >= startDate && surveyEndDate <= endDate;
   }
@@ -241,5 +286,72 @@ export class SurveysComponent {
       !this.searchName ||
       survey.SurveyName.toLowerCase().includes(this.searchName.toLowerCase())
     );
+  }
+
+  getStartDateString(date: string | Period | null): string {
+    if (date === null) return '';
+
+    if (typeof date === 'object') {
+      return date.START_DATE.substr(0, date.START_DATE.indexOf('T'));
+    } else if (Array.isArray(JSON.parse(date)))
+      return JSON.parse(date)[0].START_DATE.substr(
+        0,
+        JSON.parse(date)[0].START_DATE.indexOf('T')
+      );
+
+    return '';
+  }
+
+  getEndDateString(date: string | Period | null): string {
+    if (date === null) return '';
+
+    if (typeof date === 'object') {
+      return date.END_DATE.substr(0, date.END_DATE.indexOf('T'));
+    } else if (Array.isArray(JSON.parse(date)))
+      return JSON.parse(date)[0].END_DATE.substr(
+        0,
+        JSON.parse(date)[0].END_DATE.indexOf('T')
+      );
+
+    return '';
+  }
+
+  sortData(sort: Sort) {
+    if (!sort.active || sort.direction === '' || !this.isSort) {
+      this.isSort = false;
+      return;
+    }
+
+    this.isSort = true;
+
+    this.sortedSurveys = this.filteredSurveys.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'surveyName':
+          return this.compare(
+            a.SurveyName.toLowerCase(),
+            b.SurveyName.toLowerCase(),
+            isAsc
+          );
+        case 'from':
+          return this.compare(
+            this.getStartDateString(a.SurveyPeriods!),
+            this.getStartDateString(b.SurveyPeriods!),
+            isAsc
+          );
+        case 'to':
+          return this.compare(
+            this.getEndDateString(a.SurveyPeriods!),
+            this.getEndDateString(b.SurveyPeriods!),
+            isAsc
+          );
+        default:
+          return 0;
+      }
+    });
+  }
+
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 }

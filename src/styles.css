@@ -22,3 +22,8 @@ app-root {
   display: flex;
   flex-direction: column;
 }
+
+button.highlightStartPeriod {
+  background: orange;
+  border-radius: 100%;
+}

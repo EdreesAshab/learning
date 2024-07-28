@@ -1,9 +1,9 @@
 <table
   mat-table
-  [dataSource]="dataSource"
+  [dataSource]="surveys"
   matSort
   class="mat-elevation-z8"
-  (matSortChange)="sortData($event)"
+  (matSortChange)="sortData()"
 >
   <!-- Radio button column -->
 
@@ -62,10 +62,6 @@
       <p *ngIf="row.SelectedPeriod">
         {{ getStartDateString(row.SelectedPeriod) }}
       </p>
-
-      <p *ngIf="row.SurveyPeriods && !checkIfNotOneDate(row.SurveyPeriods)">
-        {{ getStartDateString(row.SurveyPeriods) }}
-      </p>
     </td>
   </ng-container>
 
@@ -79,10 +75,6 @@
     >
       <p *ngIf="row.SelectedPeriod">
         {{ getEndDateString(row.SelectedPeriod) }}
-      </p>
-
-      <p *ngIf="row.SurveyPeriods && !checkIfNotOneDate(row.SurveyPeriods)">
-        {{ getEndDateString(row.SurveyPeriods) }}
       </p>
     </td>
   </ng-container>

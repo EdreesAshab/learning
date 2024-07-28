@@ -264,7 +264,12 @@
       "SystemType": 3,
       "SURVEY_STATUS_AR": "منشورة",
       "SURVEY_STATUS_EN": "Published",
-      "SurveyPeriods": "[{\"ID\":23281,\"START_DATE\":\"2021-04-18T00:00:00\",\"END_DATE\":\"2022-05-31T00:00:00\"}]"
+      "SurveyPeriods": "[{\"ID\":23281,\"START_DATE\":\"2021-04-18T00:00:00\",\"END_DATE\":\"2022-05-31T00:00:00\"}]",
+      "SelectedPeriod": {
+        "ID": 23281,
+        "START_DATE": "2021-04-18T00:00:00",
+        "END_DATE": "2022-05-31T00:00:00"
+      }
     },
     {
       "TEMPLATE_ID": 26370,
@@ -299,14 +304,19 @@
       "TemplateName": "1404 Pull test #1 - Call Center ",
       "TemplateNameAr": "1404 فحص سحب #1- مركز اتصال ",
       "TemplateNameEn": "1404 Pull test #1 - Call Center ",
-      "SurveyName": "1404 Pull test #1",
+      "SurveyName": "1404 \\test #11",
       "SurveyNameAr": "1404 فحص سحب #1",
       "SurveyNameEn": "1404 Pull test #1",
       "SRV_ID": 8926,
       "SystemType": 3,
       "SURVEY_STATUS_AR": "منشورة",
       "SURVEY_STATUS_EN": "Published",
-      "SurveyPeriods": "[{\"ID\":23175,\"START_DATE\":\"2021-04-12T00:00:00\",\"END_DATE\":\"2021-11-30T00:00:00\"}]"
+      "SurveyPeriods": "[{\"ID\":23175,\"START_DATE\":\"2021-04-12T00:00:00\",\"END_DATE\":\"2021-11-30T00:00:00\"}]",
+      "SelectedPeriod": {
+        "ID": 23175,
+        "START_DATE": "2021-04-12T00:00:00",
+        "END_DATE": "2021-11-30T00:00:00"
+      }
     },
     {
       "TEMPLATE_ID": 26070,
