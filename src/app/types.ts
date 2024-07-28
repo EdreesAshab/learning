@@ -25,3 +25,9 @@ export interface Survey {
   SurveyPeriods: string | null;
   SelectedPeriod?: Period | null;
 }
+
+export interface PasswordValidatorOptions {
+  rules: Rule[];
+  userName: string;
+  email: string;
+}

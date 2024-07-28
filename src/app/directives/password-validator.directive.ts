@@ -1,19 +1,39 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
-import { Rule } from '../types';
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  Input,
+  Renderer2,
+} from '@angular/core';
+import { PasswordValidatorOptions, Rule } from '../types';
+import { PasswordRules } from '../Rules';
 
 @Directive({
   selector: '[appPasswordValidator]',
   standalone: true,
 })
 export class PasswordValidatorDirective {
+  @Input() appPasswordValidator: PasswordValidatorOptions = {
+    rules: PasswordRules,
+    userName: 'ali',
+    email: 'lenovo@email.com',
+  };
+
   password: string;
-  userName: string = 'edrees15';
-  email: string = 'edrees@email.com';
+  userName: string;
+  email: string;
+  rules: Rule[] = [];
   invalidRules: Rule[] = [];
   div: any = null;
   ul: any = null;
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
+
+  ngOnInit() {
+    this.rules = this.appPasswordValidator.rules;
+    this.userName = this.appPasswordValidator.userName;
+    this.email = this.appPasswordValidator.email;
+  }
 
   ngAfterViewInit() {
     this.div = this.renderer.createElement('div');
@@ -38,59 +58,16 @@ export class PasswordValidatorDirective {
     );
   }
 
-  rules: Rule[] = [
-    {
-      id: 0,
-      message: 'Minimum length (8)',
-      rule: () => {
-        return this.password.length >= 8;
-      },
-    },
-    {
-      id: 1,
-      message: 'Must include at least 1 upperCase letter',
-      rule: () => {
-        return /[A-Z]/.test(this.password);
-      },
-    },
-    {
-      id: 2,
-      message: 'Must include at least 1 lowerCase letter',
-      rule: () => {
-        return /[a-z]/.test(this.password);
-      },
-    },
-    {
-      id: 3,
-      message: 'Must include at least 1 number',
-      rule: () => {
-        return /\d/.test(this.password);
-      },
-    },
-    {
-      id: 4,
-      message: 'Must include at least 1 special character',
-      rule: () => {
-        return /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(this.password);
-      },
-    },
-    {
-      id: 5,
-      message: 'Must not include the userName or email',
-      rule: () => {
-        return (
-          !this.password.includes(this.userName) &&
-          !this.password.includes(this.email.split('@')[0])
-        );
-      },
-    },
-  ];
-
   checkPassword() {
     this.invalidRules = [];
 
     for (let rule of this.rules) {
-      if (!rule.rule()) {
+      if (
+        rule.id === 5 &&
+        !rule.rule(this.password, this.userName, this.email)
+      ) {
+        this.invalidRules.push(rule);
+      } else if (rule.id !== 5 && !rule.rule(this.password)) {
         this.invalidRules.push(rule);
       }
     }

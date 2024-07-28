@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { PasswordValidatorDirective } from '../../directives/password-validator.directive';
+import { PasswordValidatorOptions } from '../../types';
+import { PasswordRules } from '../../Rules';
 
 @Component({
   selector: 'app-password',
@@ -14,6 +16,11 @@ import { PasswordValidatorDirective } from '../../directives/password-validator.
 export class PasswordComponent {
   isHidden: string = 'password';
   showPasswordBtn: string = 'Show Password';
+  options: PasswordValidatorOptions = {
+    rules: PasswordRules,
+    userName: 'edrees',
+    email: 'lenovo@email.com',
+  };
 
   toggleShowPassword() {
     if (this.isHidden === 'password') {
