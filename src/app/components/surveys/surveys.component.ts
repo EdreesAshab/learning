@@ -20,12 +20,12 @@ import { SurveyGridViewItemComponent } from '../survey-grid-view-item/survey-gri
 import { SurveyDialogComponent } from '../survey-dialog/survey-dialog.component';
 import { SurveysListViewComponent } from '../surveys-list-view/surveys-list-view.component';
 import { SurveysGridViewComponent } from '../surveys-grid-view/surveys-grid-view.component';
+import { DatePeriodPickerComponent } from '../date-period-picker/date-period-picker.component';
 
 import { DataService } from '../../services/data.service';
+import { UiService } from '../../services/ui.service';
 
 import { Period, Survey } from '../../types';
-import { UiService } from '../../services/ui.service';
-import { DatePeriodPickerComponent } from '../date-period-picker/date-period-picker.component';
 
 @Component({
   selector: 'app-surveys',

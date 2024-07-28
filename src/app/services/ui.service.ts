@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { Period, Survey } from '../types';
+
+import { BehaviorSubject } from 'rxjs';
+
 import { Sort } from '@angular/material/sort';
+
+import { Period, Survey } from '../types';
 
 @Injectable({
   providedIn: 'root',

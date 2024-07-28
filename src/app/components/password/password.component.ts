@@ -3,7 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { PasswordValidatorDirective } from '../../directives/password-validator.directive';
+
 import { PasswordValidatorOptions } from '../../types';
+
 import { PasswordRules } from '../../Rules';
 
 @Component({

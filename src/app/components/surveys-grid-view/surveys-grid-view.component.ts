@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { Subscription } from 'rxjs';
+
 import { MatGridListModule } from '@angular/material/grid-list';
 
 import { SurveyGridViewItemComponent } from '../survey-grid-view-item/survey-grid-view-item.component';
-import { Survey } from '../../types';
+
 import { UiService } from '../../services/ui.service';
-import { Subscription } from 'rxjs';
+
+import { Survey } from '../../types';
 
 @Component({
   selector: 'app-surveys-grid-view',

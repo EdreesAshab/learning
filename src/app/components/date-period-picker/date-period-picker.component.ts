@@ -6,14 +6,16 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+
 import { provideNativeDateAdapter } from '@angular/material/core';
 import {
   MatCalendarCellClassFunction,
   MatDatepickerModule,
 } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { Subscription } from 'rxjs';
+
 import { UiService } from '../../services/ui.service';
+
 import { Period } from '../../types';
 
 @Component({

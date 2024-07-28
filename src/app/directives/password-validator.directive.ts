@@ -5,7 +5,9 @@ import {
   Input,
   Renderer2,
 } from '@angular/core';
+
 import { PasswordValidatorOptions, Rule } from '../types';
+
 import { PasswordRules } from '../Rules';
 
 @Directive({
