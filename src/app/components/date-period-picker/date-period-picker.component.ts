@@ -50,6 +50,7 @@ export class DatePeriodPickerComponent {
     this.range.get('end')?.reset();
 
     this.uiService.selectFilterPeriod(null);
+    this.uiService.setCurrentPage(0);
   }
 
   applyPeriodFilter(): void {

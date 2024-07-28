@@ -12,7 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTableModule } from '@angular/material/table';
-import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
@@ -66,7 +66,7 @@ export class SurveysComponent {
 
   @Input() selectedSurvey: Survey | null = null;
 
-  currentPage: number = 0;
+  currentPage: number;
   pageSize: number = 10;
   tabIndex: number = 0;
 
@@ -105,12 +105,16 @@ export class SurveysComponent {
       }
     );
 
+    this.subscription = this.uiService.currentPage$.subscribe((currentPage) => {
+      this.currentPage = currentPage;
+      this.getCurrentSurveys();
+    });
+
     this.subscription = this.uiService.sort$.subscribe((sort) => {
       if (sort) this.sort = sort;
-      if (sort?.active) {
-        this.isSort = true;
-        this.getCurrentSurveys();
-      }
+      if (sort?.direction) this.isSort = true;
+      else this.isSort = false;
+      this.getCurrentSurveys();
     });
 
     this.dataService.getData().subscribe((surveys) => {
@@ -131,7 +135,7 @@ export class SurveysComponent {
   }
 
   handlePageEvent(pageEvent: PageEvent): void {
-    this.currentPage = pageEvent.pageIndex;
+    this.uiService.setCurrentPage(pageEvent.pageIndex);
     this.pageSize = pageEvent.pageSize;
     this.selectedSurvey = null;
     this.uiService.updateSelectedSurvey(null);
@@ -149,6 +153,8 @@ export class SurveysComponent {
   }
 
   getCurrentSurveys(): void {
+    if (!this.surveys) return;
+
     this.applyFilters();
 
     this.currentSurveys = [];
@@ -158,21 +164,17 @@ export class SurveysComponent {
       this.copySurveys(this.sortedSurveys);
     } else this.copySurveys(this.filteredSurveys);
 
-    console.log(`isSort: ${this.isSort}`);
-    console.log(JSON.stringify(this.sortedSurveys[0]));
-    console.log(JSON.stringify(this.filteredSurveys[0]));
-
     this.activeTabSurveysLength = this.filteredSurveys.length;
   }
 
   searchByName(): void {
-    this.currentPage = 0;
+    this.uiService.setCurrentPage(0);
     this.getCurrentSurveys();
   }
 
   handleTabChangeEvent(tabChangeEvent: MatTabChangeEvent): void {
     this.tabIndex = tabChangeEvent.index;
-    this.currentPage = 0;
+    this.uiService.setCurrentPage(0);
     this.selectedSurvey = null;
     this.uiService.updateSelectedSurvey(null);
 
@@ -186,6 +188,8 @@ export class SurveysComponent {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(SurveyDialogComponent, {
+      width: '450px',
+      disableClose: true,
       data: {
         ...this.selectedSurvey,
       },

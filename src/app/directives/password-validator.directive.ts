@@ -13,7 +13,7 @@ import { PasswordRules } from '../Rules';
   standalone: true,
 })
 export class PasswordValidatorDirective {
-  @Input() appPasswordValidator: PasswordValidatorOptions = {
+  @Input() appPasswordValidator?: PasswordValidatorOptions = {
     rules: PasswordRules,
     userName: 'ali',
     email: 'lenovo@email.com',
@@ -30,9 +30,9 @@ export class PasswordValidatorDirective {
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
   ngOnInit() {
-    this.rules = this.appPasswordValidator.rules;
-    this.userName = this.appPasswordValidator.userName;
-    this.email = this.appPasswordValidator.email;
+    this.rules = this.appPasswordValidator!.rules;
+    this.userName = this.appPasswordValidator!.userName;
+    this.email = this.appPasswordValidator!.email;
   }
 
   ngAfterViewInit() {
