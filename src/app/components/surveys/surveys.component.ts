@@ -297,7 +297,12 @@ export class SurveysComponent {
   filterByName(survey: Survey): boolean {
     return (
       !this.searchName ||
-      survey.SurveyName.toLowerCase().includes(this.searchName.toLowerCase())
+      survey.SurveyNameEn.toString()
+        .toLowerCase()
+        .includes(this.searchName.toLowerCase()) ||
+      survey.SurveyNameAr.toString()
+        .toLowerCase()
+        .includes(this.searchName.toLowerCase())
     );
   }
 

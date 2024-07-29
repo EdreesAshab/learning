@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -7,6 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Sort } from '@angular/material/sort';
 
 import { Period, Survey } from '../types';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,10 @@ export class UiService {
   currentLanguage: string;
   currentTextSize: number;
 
-  constructor(private cookieService: CookieService) {
+  constructor(
+    private cookieService: CookieService,
+    @Inject(DOCUMENT) private document: Document
+  ) {
     if (cookieService.get('language') === '')
       cookieService.set('language', 'Ar');
     else {
@@ -66,6 +70,12 @@ export class UiService {
     if (this.currentLanguage === 'Ar') this.currentLanguage = 'En';
     else this.currentLanguage = 'Ar';
     this.cookieService.set('language', this.currentLanguage);
+
+    const htmlTag = this.document.getElementsByTagName(
+      'html'
+    )[0] as HTMLHtmlElement;
+    htmlTag.dir = this.currentLanguage === 'Ar' ? 'rtl' : 'ltr';
+
     this.languageSubject.next(this.currentLanguage);
   }
 
