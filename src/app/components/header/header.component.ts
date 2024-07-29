@@ -17,6 +17,9 @@ import { LanguagePipe } from '../../pipes/language.pipe';
 
 import { User } from '../../types';
 
+import { Users } from '../../Users';
+import { UsersService } from '../../services/users.service';
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -33,14 +36,7 @@ import { User } from '../../types';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  name: string = 'Edrees Ashab';
-  testUser: User = {
-    nameAr: 'إدريس أصحاب',
-    nameEn: 'Edrees Ashab',
-    userName: 'edrees',
-    email: 'lenovo@email.com',
-    age: 22,
-  };
+  currentUser: User;
 
   language: string;
 
@@ -50,6 +46,7 @@ export class HeaderComponent {
 
   constructor(
     private uiService: UiService,
+    private usersService: UsersService,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
@@ -67,6 +64,12 @@ export class HeaderComponent {
         this.document.documentElement.style.fontSize = '24px';
       }
     });
+
+    this.subscription = this.usersService.currentUser$.subscribe(
+      (currentUser) => {
+        this.currentUser = currentUser;
+      }
+    );
   }
 
   toggleLanguage() {

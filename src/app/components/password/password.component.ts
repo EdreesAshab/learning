@@ -7,6 +7,8 @@ import { PasswordValidatorDirective } from '../../directives/password-validator.
 import { PasswordValidatorOptions, User } from '../../types';
 
 import { PasswordRules } from '../../Rules';
+import { Subscription } from 'rxjs';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-password',
@@ -19,19 +21,26 @@ export class PasswordComponent {
   isHidden: string = 'password';
   showPasswordBtn: string = 'Show Password';
 
-  testUser: User = {
-    nameAr: 'إدريس أصحاب',
-    nameEn: 'Edrees Ashab',
-    userName: 'edrees',
-    email: 'lenovo@email.com',
-    age: 22,
-  };
+  currentUser: User;
 
-  options: PasswordValidatorOptions = {
-    rules: PasswordRules,
-    userName: this.testUser.userName,
-    email: this.testUser.email,
-  };
+  subscription: Subscription;
+
+  options: PasswordValidatorOptions;
+
+  constructor(private usersService: UsersService) {}
+
+  ngOnInit() {
+    this.subscription = this.usersService.currentUser$.subscribe(
+      (currentUser) => {
+        this.currentUser = currentUser;
+        this.options = {
+          rules: PasswordRules,
+          userName: this.currentUser.userName,
+          email: this.currentUser.email,
+        };
+      }
+    );
+  }
 
   toggleShowPassword() {
     if (this.isHidden === 'password') {

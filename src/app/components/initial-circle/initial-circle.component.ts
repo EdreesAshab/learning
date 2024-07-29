@@ -13,7 +13,7 @@ import { User } from '../../types';
   styleUrl: './initial-circle.component.css',
 })
 export class InitialCircleComponent {
-  @Input() user: User;
+  @Input() currentUser: User;
   name: string;
   initials: string;
 
@@ -28,15 +28,14 @@ export class InitialCircleComponent {
   ngOnInit() {
     this.subscription = this.uiService.language$.subscribe((language) => {
       this.language = language;
-      this.name = this.user[`name${language}` as keyof Object].toString();
+      this.name =
+        this.currentUser[`name${language}` as keyof Object].toString();
       this.getInitials();
     });
 
     this.subscription = this.uiService.textSize$.subscribe((textSize) => {
       this.textSize = textSize;
     });
-
-    this.getInitials();
   }
 
   getInitials() {

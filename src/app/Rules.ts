@@ -41,7 +41,8 @@ export const PasswordRules: Rule[] = [
     message: 'Must not include the userName or email',
     rule: (password: string, userName: string, email: string) => {
       return (
-        !password.includes(userName) && !password.includes(email.split('@')[0])
+        !password.toLowerCase().includes(userName) &&
+        !password.toLowerCase().includes(email.toLowerCase().split('@')[0])
       );
     },
   },
