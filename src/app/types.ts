@@ -31,3 +31,11 @@ export interface PasswordValidatorOptions {
   userName: string;
   email: string;
 }
+
+export interface User {
+  nameAr: string;
+  nameEn: string;
+  userName: string;
+  email: string;
+  age: number;
+}

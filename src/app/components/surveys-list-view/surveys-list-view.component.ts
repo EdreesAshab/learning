@@ -49,7 +49,7 @@ export class SurveysListViewComponent {
 
   subscription: Subscription;
 
-  language: string = 'Ar';
+  language: string;
 
   constructor(private uiService: UiService) {}
 

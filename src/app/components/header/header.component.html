@@ -19,7 +19,15 @@
     <hr style="height: 35px; border: 1px solid #e8e8e8" />
   </div>
 
-  <app-initial-circle [name]="name"></app-initial-circle>
+  <app-initial-circle [user]="testUser"></app-initial-circle>
+
+  <div style="display: flex; margin: 0 15px">
+    <hr style="height: 35px; border: 1px solid #e8e8e8" />
+  </div>
+
+  <button mat-button (click)="toggleTextSize()">
+    {{ textSizeBtn }}
+  </button>
 
   <div style="display: flex; margin: 0 15px">
     <hr style="height: 35px; border: 1px solid #e8e8e8" />

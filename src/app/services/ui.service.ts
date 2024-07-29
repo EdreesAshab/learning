@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
 
+import { CookieService } from 'ngx-cookie-service';
+
 import { Sort } from '@angular/material/sort';
 
 import { Period, Survey } from '../types';
@@ -15,16 +17,34 @@ export class UiService {
   private sortSubject = new BehaviorSubject<Sort | null>(null);
   private currentPageSubject = new BehaviorSubject<number>(0);
   private languageSubject = new BehaviorSubject<string>('Ar');
+  private textSizeSubject = new BehaviorSubject<number>(1);
 
   selectedSurvey$ = this.selectedSurveySubject.asObservable();
   filterPeriod$ = this.filterPeriodSubject.asObservable();
   sort$ = this.sortSubject.asObservable();
   currentPage$ = this.currentPageSubject.asObservable();
+
   language$ = this.languageSubject.asObservable();
+  textSize$ = this.textSizeSubject.asObservable();
 
-  currentLanguage: string = 'Ar';
+  currentLanguage: string;
+  currentTextSize: number;
 
-  constructor() {}
+  constructor(private cookieService: CookieService) {
+    if (cookieService.get('language') === '')
+      cookieService.set('language', 'Ar');
+    else {
+      this.currentLanguage = cookieService.get('language');
+      this.languageSubject.next(this.currentLanguage);
+    }
+
+    if (cookieService.get('textSize') === '')
+      cookieService.set('textSize', '1');
+    else {
+      this.currentTextSize = Number(cookieService.get('textSize'));
+      this.textSizeSubject.next(this.currentTextSize);
+    }
+  }
 
   updateSelectedSurvey(newSelectedSurvey: Survey | null): void {
     this.selectedSurveySubject.next(newSelectedSurvey);
@@ -45,6 +65,14 @@ export class UiService {
   toggleLanguage(): void {
     if (this.currentLanguage === 'Ar') this.currentLanguage = 'En';
     else this.currentLanguage = 'Ar';
+    this.cookieService.set('language', this.currentLanguage);
     this.languageSubject.next(this.currentLanguage);
+  }
+
+  toggleTextSize(): void {
+    if (this.currentTextSize === 1) this.currentTextSize = 2;
+    else this.currentTextSize = 1;
+    this.cookieService.set('textSize', this.currentTextSize.toString());
+    this.textSizeSubject.next(this.currentTextSize);
   }
 }

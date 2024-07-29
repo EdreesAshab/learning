@@ -13,7 +13,7 @@ import langs from '../langs.json';
   pure: false,
 })
 export class LanguagePipe implements PipeTransform {
-  language: string = 'Ar';
+  language: string;
 
   subscription: Subscription;
 

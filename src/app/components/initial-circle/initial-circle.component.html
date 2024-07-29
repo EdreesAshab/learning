@@ -1,6 +1,8 @@
 <div class="profile">
   <span
-    class="{{ language === 'Ar' ? 'initialsCircleAr' : 'initialsCircleEn' }}"
+    class="{{ language === 'Ar' ? 'initialsCircleAr' : 'initialsCircleEn' }} {{
+      textSize === 1 ? 'initialsCircleNormalSize' : 'initialsCircleLargeSize'
+    }}"
     >{{ initials }}</span
   >
   <span>{{ name }}</span>

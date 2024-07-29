@@ -49,9 +49,16 @@
   color: black;
 }
 
-.searchInput {
+.searchInputEn {
   color: #b8b8b8;
   padding-left: 15px;
+  border: 1px solid #b8b8b8;
+  border-radius: 5px;
+}
+
+.searchInputAr {
+  color: #b8b8b8;
+  padding-right: 15px;
   border: 1px solid #b8b8b8;
   border-radius: 5px;
 }

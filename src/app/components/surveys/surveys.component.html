@@ -36,7 +36,7 @@
         placeholder="{{
           'Search survey name' | language : 'langs' : 'searchPlaceholder'
         }}"
-        class="searchInput"
+        class="{{ language === 'Ar' ? 'searchInputAr' : 'searchInputEn' }}"
         name="searchName"
         (input)="searchByName()"
         [(ngModel)]="searchName"
