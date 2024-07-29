@@ -17,7 +17,6 @@ import { LanguagePipe } from '../../pipes/language.pipe';
 
 import { User } from '../../types';
 
-import { Users } from '../../Users';
 import { UsersService } from '../../services/users.service';
 
 @Component({
