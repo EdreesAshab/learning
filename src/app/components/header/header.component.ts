@@ -9,15 +9,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 
-import { InitialCircleComponent } from '../initial-circle/initial-circle.component';
-
 import { UiService } from '../../services/ui.service';
+import { UsersService } from '../../services/users.service';
 
 import { LanguagePipe } from '../../pipes/language.pipe';
 
-import { User } from '../../types';
+import { NameInitialsCircleDirective } from '../../directives/name-initials-circle.directive';
 
-import { UsersService } from '../../services/users.service';
+import { User } from '../../types';
 
 @Component({
   selector: 'app-header',
@@ -28,8 +27,8 @@ import { UsersService } from '../../services/users.service';
     MatButtonModule,
     MatToolbarModule,
     MatDividerModule,
-    InitialCircleComponent,
     LanguagePipe,
+    NameInitialsCircleDirective,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
@@ -43,6 +42,8 @@ export class HeaderComponent {
 
   textSizeBtn: string;
 
+  name: string;
+
   constructor(
     private uiService: UiService,
     private usersService: UsersService,
@@ -50,10 +51,6 @@ export class HeaderComponent {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.uiService.language$.subscribe((language) => {
-      this.language = language;
-    });
-
     this.subscription = this.uiService.textSize$.subscribe((textSize) => {
       if (textSize === 1) {
         this.textSizeBtn = 'Large Text';
@@ -69,6 +66,15 @@ export class HeaderComponent {
         this.currentUser = currentUser;
       }
     );
+
+    this.subscription = this.uiService.language$.subscribe((language) => {
+      this.language = language;
+
+      this.name =
+        this.language === 'Ar'
+          ? this.currentUser.nameAr
+          : this.currentUser.nameEn;
+    });
   }
 
   toggleLanguage() {

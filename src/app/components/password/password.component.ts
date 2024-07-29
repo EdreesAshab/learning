@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { Subscription } from 'rxjs';
+
+import { UsersService } from '../../services/users.service';
+
 import { PasswordValidatorDirective } from '../../directives/password-validator.directive';
 
 import { PasswordValidatorOptions, User } from '../../types';
 
 import { PasswordRules } from '../../Rules';
-import { Subscription } from 'rxjs';
-import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-password',

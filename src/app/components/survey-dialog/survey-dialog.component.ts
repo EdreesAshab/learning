@@ -15,10 +15,11 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
+import { UiService } from '../../services/ui.service';
+
 import { LanguagePipe } from '../../pipes/language.pipe';
 
 import { Survey } from '../../types';
-import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-survey-dialog',

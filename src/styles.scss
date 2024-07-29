@@ -35,3 +35,37 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.profile {
+  font-size: 0.6em;
+}
+
+.initialsCircleEn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #b9ebf0;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.initialsCircleAr {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #b9ebf0;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.initialsCircleNormalSize {
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+}
+
+.initialsCircleLargeSize {
+  width: 40px;
+  height: 40px;
+  font: 24px;
+}
