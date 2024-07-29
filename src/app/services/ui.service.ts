@@ -30,6 +30,7 @@ export class UiService {
 
   currentLanguage: string;
   currentTextSize: number;
+  htmlTag: HTMLHtmlElement;
 
   constructor(
     private cookieService: CookieService,
@@ -48,6 +49,12 @@ export class UiService {
       this.currentTextSize = Number(cookieService.get('textSize'));
       this.textSizeSubject.next(this.currentTextSize);
     }
+
+    this.htmlTag = this.document.getElementsByTagName(
+      'html'
+    )[0] as HTMLHtmlElement;
+
+    this.htmlTag.dir = this.currentLanguage === 'Ar' ? 'rtl' : 'ltr';
   }
 
   updateSelectedSurvey(newSelectedSurvey: Survey | null): void {
@@ -71,10 +78,7 @@ export class UiService {
     else this.currentLanguage = 'Ar';
     this.cookieService.set('language', this.currentLanguage);
 
-    const htmlTag = this.document.getElementsByTagName(
-      'html'
-    )[0] as HTMLHtmlElement;
-    htmlTag.dir = this.currentLanguage === 'Ar' ? 'rtl' : 'ltr';
+    this.htmlTag.dir = this.currentLanguage === 'Ar' ? 'rtl' : 'ltr';
 
     this.languageSubject.next(this.currentLanguage);
   }

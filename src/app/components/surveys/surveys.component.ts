@@ -251,6 +251,9 @@ export class SurveysComponent {
 
     this.selectedSurvey = null;
     this.uiService.updateSelectedSurvey(null);
+
+    if (this.isSort) this.isSort = false;
+    this.getCurrentSurveys();
   }
 
   applyFilters(): void {
