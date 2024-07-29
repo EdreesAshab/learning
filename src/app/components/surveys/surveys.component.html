@@ -64,7 +64,10 @@
     <!-- Surveys -->
     <div *ngIf="currentSurveys && currentSurveys.length !== 0">
       <!-- Survey View Tab -->
-      <mat-tab-group (selectedTabChange)="handleViewTabChangeEvent($event)">
+      <mat-tab-group
+        (selectedTabChange)="handleViewTabChangeEvent($event)"
+        [selectedIndex]="selectedView === 'list' ? 0 : 1"
+      >
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon [fontIcon]="'list'"></mat-icon>
