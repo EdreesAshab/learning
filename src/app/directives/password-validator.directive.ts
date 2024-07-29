@@ -81,9 +81,7 @@ export class PasswordValidatorDirective {
     this.password = value;
     this.checkPassword();
 
-    while (this.ul.firstChild) {
-      this.renderer.removeChild(this.ul, this.ul.firstChild);
-    }
+    this.ul.replaceChildren();
 
     if (this.div && this.invalidRules.length) {
       this.renderer.setStyle(this.div, 'display', 'block');
