@@ -1301,7 +1301,12 @@
       "SystemType": 3,
       "SURVEY_STATUS_AR": "منشورة",
       "SURVEY_STATUS_EN": "Published",
-      "SurveyPeriods": "[{\"ID\":27542,\"START_DATE\":\"2021-10-13T00:00:00\",\"END_DATE\":\"2021-11-30T00:00:00\"}]"
+      "SurveyPeriods": "[{\"ID\":27542,\"START_DATE\":\"2021-10-13T00:00:00\",\"END_DATE\":\"2021-11-30T00:00:00\"}]",
+      "SelectedPeriod": {
+        "ID": 27542,
+        "START_DATE": "2021-10-13T00:00:00",
+        "END_DATE": "2021-11-30T00:00:00"
+      }
     },
     {
       "TEMPLATE_ID": 27836,

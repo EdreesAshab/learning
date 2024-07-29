@@ -241,7 +241,9 @@ export class SurveysComponent {
   updateSurvey(survey: Survey) {
     this.dataService.updateSurveyName(survey).subscribe({
       next: (response) => {
-        console.log(`Survey name updated successfully: ${response}`);
+        console.log(
+          `Survey name updated successfully: ${JSON.stringify(response)}`
+        );
         const index = this.surveys.findIndex(
           (item) => item.SRV_ID === survey.SRV_ID
         );
