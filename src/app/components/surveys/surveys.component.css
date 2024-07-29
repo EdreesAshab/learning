@@ -18,6 +18,11 @@
   gap: 0.75em;
 }
 
+mat-spinner {
+  width: 50%;
+  margin: 0 auto;
+}
+
 .btn {
   background: none;
   border-radius: 5px;

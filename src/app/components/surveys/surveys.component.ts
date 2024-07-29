@@ -15,6 +15,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { SurveyGridViewItemComponent } from '../survey-grid-view-item/survey-grid-view-item.component';
 import { SurveyDialogComponent } from '../survey-dialog/survey-dialog.component';
@@ -45,6 +46,7 @@ import { Period, Survey } from '../../types';
     MatTableModule,
     MatSortModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
     SurveyGridViewItemComponent,
     SurveysListViewComponent,
     SurveysGridViewComponent,
@@ -95,6 +97,8 @@ export class SurveysComponent {
 
   language: string;
 
+  isLoading: boolean = true;
+
   constructor(private dataService: DataService, private uiService: UiService) {}
 
   ngOnInit() {
@@ -139,6 +143,8 @@ export class SurveysComponent {
           this.surveysPeriods.push(survey.SelectedPeriod);
         }
       });
+
+      this.isLoading = false;
 
       this.getCurrentSurveys();
     });

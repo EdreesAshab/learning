@@ -55,11 +55,13 @@
   </mat-toolbar>
 
   <!-- Main section -->
-  <div>
+  <div style="width: 100%">
     <!-- No Surveys -->
-    <p *ngIf="currentSurveys && currentSurveys.length === 0">
+    <p *ngIf="currentSurveys && currentSurveys.length === 0 && !isLoading">
       {{ "NO RESULTS FOUND" | language : "langs" : "noResults" }}
     </p>
+
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
 
     <!-- Surveys -->
     <div *ngIf="currentSurveys && currentSurveys.length !== 0">
