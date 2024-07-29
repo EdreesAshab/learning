@@ -1,4 +1,8 @@
-<mat-grid-list cols="5" gutterSize="10px" [dir]="gridDir">
+<mat-grid-list
+  cols="5"
+  gutterSize="10px"
+  [dir]="language === 'Ar' ? 'rtl' : 'ltr'"
+>
   <mat-grid-tile *ngFor="let survey of surveys"
     ><app-survey-grid-view-item
       [survey]="survey"

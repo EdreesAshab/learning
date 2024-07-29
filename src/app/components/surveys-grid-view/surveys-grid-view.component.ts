@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { Subscription } from 'rxjs';
 
-import { Direction } from '@angular/cdk/bidi';
-
 import { MatGridListModule } from '@angular/material/grid-list';
 
 import { SurveyGridViewItemComponent } from '../survey-grid-view-item/survey-grid-view-item.component';
@@ -25,7 +23,7 @@ export class SurveysGridViewComponent {
 
   selectedSurvey: Survey | null;
 
-  gridDir: Direction;
+  language: string;
 
   subscription: Subscription;
 
@@ -39,8 +37,7 @@ export class SurveysGridViewComponent {
     );
 
     this.subscription = this.uiService.language$.subscribe((language) => {
-      if (language === 'Ar') this.gridDir = 'rtl';
-      else this.gridDir = 'ltr';
+      this.language = language;
     });
   }
 

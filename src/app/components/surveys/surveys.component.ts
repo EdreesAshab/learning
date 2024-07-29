@@ -81,7 +81,8 @@ export class SurveysComponent {
 
   selectedView: string = 'list';
 
-  readonly SurveyName = signal('');
+  readonly SurveyNameAr = signal('');
+  readonly SurveyNameEn = signal('');
   readonly dialog = inject(MatDialog);
 
   sort: Sort;
@@ -126,7 +127,7 @@ export class SurveysComponent {
       this.language = language;
     });
 
-    this.dataService.getData().subscribe((surveys) => {
+    this.dataService.getSurveys().subscribe((surveys) => {
       this.surveys = surveys;
       this.surveys.map((survey) => {
         let periods: Period[] | null = null;
@@ -205,12 +206,21 @@ export class SurveysComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.length >= 4) {
-        this.SurveyName.set(result.trim());
+      if (
+        result &&
+        result.Ar &&
+        result.Ar().length >= 4 &&
+        result.En &&
+        result.En().length >= 4
+      ) {
+        this.SurveyNameAr.set(result.Ar().trim());
+        this.SurveyNameEn.set(result.En().trim());
 
         this.surveys.forEach((survey) => {
           if (survey.SRV_ID === this.selectedSurvey!.SRV_ID) {
-            this.selectedSurvey!.SurveyName = this.SurveyName();
+            this.selectedSurvey!.SurveyNameAr = this.SurveyNameAr();
+            this.selectedSurvey!.SurveyNameEn = this.SurveyNameEn();
+            this.selectedSurvey!.SurveyName = this.SurveyNameEn();
             this.updateSurvey(this.selectedSurvey!);
             this.getCurrentSurveys();
           }
@@ -229,7 +239,7 @@ export class SurveysComponent {
   }
 
   updateSurvey(survey: Survey) {
-    this.dataService.updateItem(survey).subscribe({
+    this.dataService.updateSurveyName(survey).subscribe({
       next: (response) => {
         console.log(`Survey name updated successfully: ${response}`);
         const index = this.surveys.findIndex(

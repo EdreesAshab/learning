@@ -1,6 +1,8 @@
 import { Component, inject, model } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { Subscription } from 'rxjs';
+
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -16,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
 import { LanguagePipe } from '../../pipes/language.pipe';
 
 import { Survey } from '../../types';
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-survey-dialog',
@@ -37,7 +40,24 @@ import { Survey } from '../../types';
 export class SurveyDialogComponent {
   readonly dialogRef = inject(MatDialogRef<SurveyDialogComponent>);
   readonly data = inject<Survey>(MAT_DIALOG_DATA);
-  readonly SurveyName = model(this.data.SurveyName);
+  readonly SurveyNameAr = model(this.data.SurveyNameAr);
+  readonly SurveyNameEn = model(this.data.SurveyNameEn);
+  readonly SurveyName = model({
+    Ar: this.SurveyNameAr,
+    En: this.SurveyNameEn,
+  });
+
+  language: string;
+
+  subscription: Subscription;
+
+  constructor(private uiService: UiService) {}
+
+  ngOnInit() {
+    this.subscription = this.uiService.language$.subscribe((language) => {
+      this.language = language;
+    });
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

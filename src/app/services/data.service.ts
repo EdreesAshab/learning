@@ -18,11 +18,11 @@ export class DataService {
   private dataUrl = 'http://localhost:3000/surveys';
   constructor(private http: HttpClient) {}
 
-  getData(): Observable<Survey[]> {
+  getSurveys(): Observable<Survey[]> {
     return this.http.get<Survey[]>(this.dataUrl);
   }
 
-  updateItem(updatedSurvey: Survey): Observable<Survey> {
+  updateSurveyName(updatedSurvey: Survey): Observable<Survey> {
     return this.http.put<any>(
       `${this.dataUrl}/${updatedSurvey.SRV_ID}`,
       updatedSurvey,

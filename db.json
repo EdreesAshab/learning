@@ -7,12 +7,17 @@
       "TemplateNameEn": "Notification #1  - Call Center ",
       "SurveyName": "Notification #1",
       "SurveyNameAr": "اشعارات #1",
-      "SurveyNameEn": "Notification #1 ",
+      "SurveyNameEn": "Notification #1",
       "SRV_ID": 9047,
       "SystemType": 3,
       "SURVEY_STATUS_AR": "منشورة",
       "SURVEY_STATUS_EN": "Published",
-      "SurveyPeriods": "[{\"ID\":24425,\"START_DATE\":\"2021-05-24T00:00:00\",\"END_DATE\":\"2022-07-31T00:00:00\"}]"
+      "SurveyPeriods": "[{\"ID\":24425,\"START_DATE\":\"2021-05-24T00:00:00\",\"END_DATE\":\"2022-07-31T00:00:00\"}]",
+      "SelectedPeriod": {
+        "ID": 24425,
+        "START_DATE": "2021-05-24T00:00:00",
+        "END_DATE": "2022-07-31T00:00:00"
+      }
     },
     {
       "TEMPLATE_ID": 29148,
@@ -351,7 +356,7 @@
       "TemplateName": "iframe  - Call Center ",
       "TemplateNameAr": "اي فريم- ???? ????? ",
       "TemplateNameEn": "iframe  - Call Center ",
-      "SurveyName": "iframe ",
+      "SurveyName": "iframe",
       "SurveyNameAr": "اي فريم",
       "SurveyNameEn": "iframe ",
       "SRV_ID": 8526,
