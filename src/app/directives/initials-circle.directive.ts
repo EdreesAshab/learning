@@ -4,6 +4,7 @@ import {
   ElementRef,
   Input,
   Renderer2,
+  SimpleChanges,
 } from '@angular/core';
 
 import { Subscription } from 'rxjs';
@@ -11,11 +12,11 @@ import { Subscription } from 'rxjs';
 import { UiService } from '../services/ui.service';
 
 @Directive({
-  selector: '[appNameInitialsCircle]',
+  selector: '[appInitialsCircle]',
   standalone: true,
 })
-export class NameInitialsCircleDirective {
-  @Input() appNameInitialsCircle: string;
+export class InitialsCircleDirective {
+  @Input() appInitialsCircle: string;
 
   initials: string;
 
@@ -60,10 +61,23 @@ export class NameInitialsCircleDirective {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['appInitialsCircle'] && this.span) {
+      this.checkLanguage();
+      this.getInitials();
+
+      this.span.replaceChildren();
+
+      const initials = this.renderer.createText(this.initials);
+
+      this.renderer.appendChild(this.span, initials);
+    }
+  }
+
   getInitials() {
-    let str = this.appNameInitialsCircle.split(' ');
+    let str = this.appInitialsCircle.split(' ');
     this.initials =
-      this.appNameInitialsCircle.charAt(0).toUpperCase() +
+      this.appInitialsCircle.charAt(0).toUpperCase() +
       str[str.length - 1].charAt(0).toUpperCase();
   }
 

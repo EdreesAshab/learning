@@ -14,7 +14,7 @@ import { UsersService } from '../../services/users.service';
 
 import { LanguagePipe } from '../../pipes/language.pipe';
 
-import { NameInitialsCircleDirective } from '../../directives/name-initials-circle.directive';
+import { InitialsCircleDirective } from '../../directives/initials-circle.directive';
 
 import { User } from '../../types';
 
@@ -28,7 +28,7 @@ import { User } from '../../types';
     MatToolbarModule,
     MatDividerModule,
     LanguagePipe,
-    NameInitialsCircleDirective,
+    InitialsCircleDirective,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
