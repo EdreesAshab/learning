@@ -3,10 +3,22 @@
   <mat-toolbar class="subHeader">
     <!-- Survey Status Tab -->
     <mat-tab-group (selectedTabChange)="handleTabChangeEvent($event)">
-      <mat-tab label="Published"> </mat-tab>
-      <mat-tab label="Expired"> </mat-tab>
-      <mat-tab label="Closed"> </mat-tab>
-      <mat-tab label="All Surveys"> </mat-tab>
+      <mat-tab
+        label="{{ 'Published' | language : 'langs' : 'surveyStatusPublished' }}"
+      >
+      </mat-tab>
+      <mat-tab
+        label="{{ 'Expired' | language : 'langs' : 'surveyStatusExpired' }}"
+      >
+      </mat-tab>
+      <mat-tab
+        label="{{ 'Closed' | language : 'langs' : 'surveyStatusClosed' }}"
+      >
+      </mat-tab>
+      <mat-tab
+        label="{{ 'All Surveys' | language : 'langs' : 'surveyStatusAll' }}"
+      >
+      </mat-tab>
     </mat-tab-group>
 
     <!-- Survey filter -->
@@ -21,7 +33,9 @@
       <input
         type="text"
         matInput
-        placeholder="Search survey name"
+        placeholder="{{
+          'Search survey name' | language : 'langs' : 'searchPlaceholder'
+        }}"
         class="searchInput"
         name="searchName"
         (input)="searchByName()"
@@ -53,13 +67,13 @@
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon [fontIcon]="'list'"></mat-icon>
-            List
+            {{ "List" | language : "langs" : "listView" }}
           </ng-template>
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>
             <mat-icon [fontIcon]="'grid_view'"></mat-icon>
-            Grid
+            {{ "Grid" | language : "langs" : "gridView" }}
           </ng-template>
         </mat-tab>
       </mat-tab-group>

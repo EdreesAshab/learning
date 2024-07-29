@@ -1,10 +1,8 @@
-import { Component, ViewChild, Input, SimpleChanges } from '@angular/core';
-import { MatTableModule } from '@angular/material/table';
-import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
-import { CommonModule } from '@angular/common';
-import { Period, Survey } from '../../types';
-
+import { Component, ViewChild, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+import { Subscription } from 'rxjs';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
@@ -12,24 +10,29 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatTableModule } from '@angular/material/table';
+import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
+
 import { UiService } from '../../services/ui.service';
-import { Subscription } from 'rxjs';
+
 import { LanguagePipe } from '../../pipes/language.pipe';
+
+import { Period, Survey } from '../../types';
 
 @Component({
   selector: 'app-surveys-list-view',
   standalone: true,
   imports: [
-    CommonModule,
-    MatTableModule,
     FormsModule,
+    CommonModule,
     MatFormFieldModule,
     MatCardModule,
     MatIconModule,
     MatInputModule,
     MatSelectModule,
-    MatSortModule,
     MatRadioModule,
+    MatTableModule,
+    MatSortModule,
     LanguagePipe,
   ],
   templateUrl: './surveys-list-view.component.html',
@@ -46,6 +49,8 @@ export class SurveysListViewComponent {
 
   subscription: Subscription;
 
+  language: string = 'Ar';
+
   constructor(private uiService: UiService) {}
 
   ngOnInit() {
@@ -54,6 +59,10 @@ export class SurveysListViewComponent {
         this.selectedSurvey = newSelectedSurvey;
       }
     );
+
+    this.subscription = this.uiService.language$.subscribe((language) => {
+      this.language = language;
+    });
   }
 
   selectSurvey(survey: Survey) {

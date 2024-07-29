@@ -1,15 +1,18 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { Subscription } from 'rxjs';
+
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 
 import { InitialCircleComponent } from '../initial-circle/initial-circle.component';
+
 import { UiService } from '../../services/ui.service';
+
 import { LanguagePipe } from '../../pipes/language.pipe';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',

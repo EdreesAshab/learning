@@ -1,4 +1,7 @@
 <div class="profile">
-  <span class="initialsCircle">{{ initials }}</span>
+  <span
+    class="{{ language === 'Ar' ? 'initialsCircleAr' : 'initialsCircleEn' }}"
+    >{{ initials }}</span
+  >
   <span>{{ name }}</span>
 </div>

@@ -18,9 +18,16 @@
   background-color: #f9f9f9;
 }
 
-.mat-icon {
+.mat-icon.en {
   position: relative;
   top: 5px;
   left: -15px;
+  font-size: 25px;
+}
+
+.mat-icon.ar {
+  position: relative;
+  top: 5px;
+  right: -15px;
   font-size: 25px;
 }

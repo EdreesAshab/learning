@@ -16,6 +16,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { UiService } from '../../services/ui.service';
 
+import { LanguagePipe } from '../../pipes/language.pipe';
+
 import { Period } from '../../types';
 
 @Component({
@@ -28,6 +30,7 @@ import { Period } from '../../types';
     FormsModule,
     ReactiveFormsModule,
     JsonPipe,
+    LanguagePipe,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './date-period-picker.component.html',

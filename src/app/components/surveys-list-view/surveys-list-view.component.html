@@ -12,7 +12,10 @@
     <td
       mat-cell
       *matCellDef="let row"
-      [ngClass]="{ selectedLeftSurvey: isSelected(row.SRV_ID) }"
+      [ngClass]="{
+        selectedLeftSurvey: isSelected(row.SRV_ID) && language === 'En',
+        selectedRightSurvey: isSelected(row.SRV_ID) && language === 'Ar'
+      }"
     >
       <mat-radio-button
         [checked]="isSelected(row.SRV_ID)"
@@ -23,7 +26,9 @@
 
   <!-- SurveyName Column -->
   <ng-container matColumnDef="surveyName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Survey Name</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ "Survey Name" | language : "langs" : "surveyName" }}
+    </th>
     <td
       mat-cell
       *matCellDef="let row"
@@ -33,18 +38,21 @@
         [fontIcon]="'check'"
         style="color: #02ca98"
         *ngIf="row.SURVEY_STATUS_EN === 'Published'"
+        class="{{ language === 'Ar' ? 'ar' : 'en' }}"
       ></mat-icon>
 
       <mat-icon
         [fontIcon]="'alarm'"
         style="color: #8d8d8d"
         *ngIf="row.SURVEY_STATUS_EN === 'Expired'"
+        class="{{ language === 'Ar' ? 'ar' : 'en' }}"
       ></mat-icon>
 
       <mat-icon
         [fontIcon]="'lock'"
         style="color: #8d8d8d"
         *ngIf="row.SURVEY_STATUS_EN === 'Closed'"
+        class="{{ language === 'Ar' ? 'ar' : 'en' }}"
       ></mat-icon>
 
       {{ row | language : "Name" }}
@@ -53,7 +61,9 @@
 
   <!-- From Column -->
   <ng-container matColumnDef="from">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>From</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ "From" | language : "langs" : "periodFrom" }}
+    </th>
     <td
       mat-cell
       *matCellDef="let row"
@@ -67,7 +77,9 @@
 
   <!-- To Column -->
   <ng-container matColumnDef="to">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>To</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ "To" | language : "langs" : "periodTo" }}
+    </th>
     <td
       mat-cell
       *matCellDef="let row"
@@ -81,16 +93,23 @@
 
   <!-- Period Column -->
   <ng-container matColumnDef="period">
-    <th mat-header-cell *matHeaderCellDef>Period</th>
+    <th mat-header-cell *matHeaderCellDef>
+      {{ "Period" | language : "langs" : "period" }}
+    </th>
     <td
       mat-cell
       *matCellDef="let row"
-      [ngClass]="{ selectedRightSurvey: isSelected(row.SRV_ID) }"
+      [ngClass]="{
+        selectedRightSurvey: isSelected(row.SRV_ID) && language === 'En',
+        selectedLeftSurvey: isSelected(row.SRV_ID) && language === 'Ar'
+      }"
     >
       <mat-form-field
         *ngIf="row.SurveyPeriods && checkIfNotOneDate(row.SurveyPeriods)"
       >
-        <mat-label>Select Period</mat-label>
+        <mat-label>{{
+          "Select period" | language : "langs" : "selectPeriod"
+        }}</mat-label>
         <mat-select (selectionChange)="changePeriod($event.value, row)">
           @for (period of getParsedPeriods(row.SurveyPeriods); track $index) {
           <mat-option [value]="period"

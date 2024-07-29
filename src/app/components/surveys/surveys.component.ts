@@ -25,8 +25,9 @@ import { DatePeriodPickerComponent } from '../date-period-picker/date-period-pic
 import { DataService } from '../../services/data.service';
 import { UiService } from '../../services/ui.service';
 
-import { Period, Survey } from '../../types';
 import { LanguagePipe } from '../../pipes/language.pipe';
+
+import { Period, Survey } from '../../types';
 
 @Component({
   selector: 'app-surveys',
@@ -83,8 +84,6 @@ export class SurveysComponent {
   readonly SurveyName = signal('');
   readonly dialog = inject(MatDialog);
 
-  language: string = 'Ar';
-
   sort: Sort;
 
   @ViewChild(MatMenu) menu!: MatMenu;
@@ -92,6 +91,8 @@ export class SurveysComponent {
   selectedFilterPeriod: Period | null = null;
 
   isSort: boolean = false;
+
+  language: string;
 
   constructor(private dataService: DataService, private uiService: UiService) {}
 
@@ -119,6 +120,10 @@ export class SurveysComponent {
       if (sort?.direction) this.isSort = true;
       else this.isSort = false;
       this.getCurrentSurveys();
+    });
+
+    this.subscription = this.uiService.language$.subscribe((language) => {
+      this.language = language;
     });
 
     this.dataService.getData().subscribe((surveys) => {

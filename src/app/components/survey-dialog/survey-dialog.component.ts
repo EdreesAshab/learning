@@ -13,6 +13,8 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
+import { LanguagePipe } from '../../pipes/language.pipe';
+
 import { Survey } from '../../types';
 
 @Component({
@@ -27,6 +29,7 @@ import { Survey } from '../../types';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    LanguagePipe,
   ],
   templateUrl: './survey-dialog.component.html',
   styleUrl: './survey-dialog.component.css',

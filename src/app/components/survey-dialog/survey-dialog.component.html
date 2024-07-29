@@ -1,7 +1,9 @@
-<h2 mat-dialog-title>SURVEY</h2>
+<h2 mat-dialog-title>{{ "SURVEY" | language : "langs" : "surveyLabel" }}</h2>
 <mat-dialog-content>
   <mat-form-field>
-    <mat-label>Survey Name</mat-label>
+    <mat-label>{{
+      "Survey Name" | language : "langs" : "surveyName"
+    }}</mat-label>
     <input matInput [(ngModel)]="SurveyName" />
   </mat-form-field>
   <p>SRV_ID: {{ data.SRV_ID }}</p>
@@ -16,8 +18,10 @@
   <p>SystemType: {{ data.SystemType }}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="onNoClick()">
+    {{ "Cancel" | language : "langs" : "closeSurveyNameEdit" }}
+  </button>
   <button mat-button [mat-dialog-close]="SurveyName()" cdkFocusInitial>
-    Ok
+    {{ "Save" | language : "langs" : "confirmSurveyNameEdit" }}
   </button>
 </mat-dialog-actions>
