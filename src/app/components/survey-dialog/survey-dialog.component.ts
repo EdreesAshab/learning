@@ -19,7 +19,7 @@ import { UiService } from '../../services/ui.service';
 
 import { LanguagePipe } from '../../pipes/language.pipe';
 
-import { Survey } from '../../types';
+import { Survey } from '../../models/Survey.model';
 
 @Component({
   selector: 'app-survey-dialog',

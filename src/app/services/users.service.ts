@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
 
-import { User } from '../types';
+import { User } from '../models/User.model';
 
 import { Users } from '../Users';
 

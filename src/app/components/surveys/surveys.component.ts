@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,8 +30,8 @@ import { UiService } from '../../services/ui.service';
 
 import { LanguagePipe } from '../../pipes/language.pipe';
 
-import { Period, Survey } from '../../types';
-import { ToastrService } from 'ngx-toastr';
+import { Period } from '../../models/Period.model';
+import { Survey } from '../../models/Survey.model';
 
 @Component({
   selector: 'app-surveys',

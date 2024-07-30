@@ -18,7 +18,7 @@ import { UiService } from '../../services/ui.service';
 
 import { LanguagePipe } from '../../pipes/language.pipe';
 
-import { Period } from '../../types';
+import { Period } from '../../models/Period.model';
 
 @Component({
   selector: 'app-date-period-picker',

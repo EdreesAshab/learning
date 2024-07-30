@@ -6,7 +6,8 @@ import {
   Renderer2,
 } from '@angular/core';
 
-import { PasswordValidatorOptions, Rule } from '../types';
+import { PasswordValidatorOptions } from '../models/PasswordValidatorOptions.model';
+import { Rule } from '../models/Rule.model';
 
 import { PasswordRules } from '../Rules';
 

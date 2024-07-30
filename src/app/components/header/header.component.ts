@@ -16,7 +16,7 @@ import { LanguagePipe } from '../../pipes/language.pipe';
 
 import { InitialsCircleDirective } from '../../directives/initials-circle.directive';
 
-import { User } from '../../types';
+import { User } from '../../models/User.model';
 
 @Component({
   selector: 'app-header',

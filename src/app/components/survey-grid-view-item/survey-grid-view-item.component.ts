@@ -10,7 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { LanguagePipe } from '../../pipes/language.pipe';
 
-import { Survey, Period } from '../../types';
+import { Survey } from '../../models/Survey.model';
+import { Period } from '../../models/Period.model';
 
 @Component({
   selector: 'app-survey-grid-view-item',

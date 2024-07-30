@@ -8,7 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Sort } from '@angular/material/sort';
 
-import { Period, Survey } from '../types';
+import { Period } from '../models/Period.model';
+import { Survey } from '../models/Survey.model';
 
 @Injectable({
   providedIn: 'root',
