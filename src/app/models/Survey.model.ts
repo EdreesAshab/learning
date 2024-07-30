@@ -1,4 +1,4 @@
-import { Period } from './Period.model';
+import { type Period } from './Period.model';
 
 export interface Survey {
   TEMPLATE_ID?: number;

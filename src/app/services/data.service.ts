@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { Survey } from '../models/Survey.model';
+import { type Survey } from '../models/Survey.model';
 
 const httpOptions = {
   headers: new HttpHeaders({

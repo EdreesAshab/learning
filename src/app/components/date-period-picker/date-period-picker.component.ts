@@ -18,7 +18,7 @@ import { UiService } from '../../services/ui.service';
 
 import { LanguagePipe } from '../../pipes/language.pipe';
 
-import { Period } from '../../models/Period.model';
+import { type Period } from '../../models/Period.model';
 
 @Component({
   selector: 'app-date-period-picker',
@@ -47,8 +47,6 @@ export class DatePeriodPickerComponent {
   @Input() surveysPeriods: Period[] = [];
 
   constructor(private uiService: UiService) {}
-
-  ngOnInit() {}
 
   clearPeriodFilter(): void {
     this.range.get('start')?.reset();

@@ -17,8 +17,8 @@ import { UiService } from '../../services/ui.service';
 
 import { LanguagePipe } from '../../pipes/language.pipe';
 
-import { Period } from '../../models/Period.model';
-import { Survey } from '../../models/Survey.model';
+import { type Period } from '../../models/Period.model';
+import { type Survey } from '../../models/Survey.model';
 
 @Component({
   selector: 'app-surveys-list-view',

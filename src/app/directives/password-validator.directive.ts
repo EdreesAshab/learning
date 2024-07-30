@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 import { PasswordValidatorOptions } from '../models/PasswordValidatorOptions.model';
-import { Rule } from '../models/Rule.model';
+import { type Rule } from '../models/Rule.model';
 
 import { PasswordRules } from '../Rules';
 

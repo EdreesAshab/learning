@@ -8,8 +8,8 @@ import { UsersService } from '../../services/users.service';
 
 import { PasswordValidatorDirective } from '../../directives/password-validator.directive';
 
-import { User } from '../../models/User.model';
-import { PasswordValidatorOptions } from '../../models/PasswordValidatorOptions.model';
+import { type User } from '../../models/User.model';
+import { type PasswordValidatorOptions } from '../../models/PasswordValidatorOptions.model';
 
 import { PasswordRules } from '../../Rules';
 

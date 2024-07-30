@@ -1,4 +1,4 @@
-import { Rule } from './Rule.model';
+import { type Rule } from './Rule.model';
 
 export interface PasswordValidatorOptions {
   rules: Rule[];

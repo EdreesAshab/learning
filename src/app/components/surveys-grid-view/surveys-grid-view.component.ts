@@ -9,7 +9,7 @@ import { SurveyGridViewItemComponent } from '../survey-grid-view-item/survey-gri
 
 import { UiService } from '../../services/ui.service';
 
-import { Survey } from '../../models/Survey.model';
+import { type Survey } from '../../models/Survey.model';
 
 @Component({
   selector: 'app-surveys-grid-view',
