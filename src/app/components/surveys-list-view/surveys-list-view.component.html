@@ -6,7 +6,6 @@
   (matSortChange)="sortData()"
 >
   <!-- Radio button column -->
-
   <ng-container matColumnDef="radio">
     <th mat-header-cell *matHeaderCellDef></th>
     <td
@@ -34,26 +33,25 @@
       *matCellDef="let row"
       [ngClass]="{ selectedSurvey: isSelected(row.SRV_ID) }"
     >
+      @if (row.SURVEY_STATUS_EN === 'Published') {
       <mat-icon
         [fontIcon]="'check'"
         style="color: #02ca98"
-        *ngIf="row.SURVEY_STATUS_EN === 'Published'"
         class="{{ language === 'Ar' ? 'ar' : 'en' }}"
       ></mat-icon>
-
+      } @else if (row.SURVEY_STATUS_EN === 'Expired') {
       <mat-icon
         [fontIcon]="'alarm'"
         style="color: #8d8d8d"
-        *ngIf="row.SURVEY_STATUS_EN === 'Expired'"
         class="{{ language === 'Ar' ? 'ar' : 'en' }}"
       ></mat-icon>
-
+      } @else if (row.SURVEY_STATUS_EN === 'Closed') {
       <mat-icon
         [fontIcon]="'lock'"
         style="color: #8d8d8d"
-        *ngIf="row.SURVEY_STATUS_EN === 'Closed'"
         class="{{ language === 'Ar' ? 'ar' : 'en' }}"
       ></mat-icon>
+      }
 
       {{ row | language : "Name" }}
     </td>
@@ -69,9 +67,11 @@
       *matCellDef="let row"
       [ngClass]="{ selectedSurvey: isSelected(row.SRV_ID) }"
     >
-      <p *ngIf="row.SelectedPeriod">
+      @if (row.SelectedPeriod) {
+      <p>
         {{ getStartDateString(row.SelectedPeriod) }}
       </p>
+      }
     </td>
   </ng-container>
 
@@ -85,9 +85,11 @@
       *matCellDef="let row"
       [ngClass]="{ selectedSurvey: isSelected(row.SRV_ID) }"
     >
-      <p *ngIf="row.SelectedPeriod">
+      @if (row.SelectedPeriod) {
+      <p>
         {{ getEndDateString(row.SelectedPeriod) }}
       </p>
+      }
     </td>
   </ng-container>
 
@@ -104,9 +106,8 @@
         selectedLeftSurvey: isSelected(row.SRV_ID) && language === 'Ar'
       }"
     >
-      <mat-form-field
-        *ngIf="row.SurveyPeriods && checkIfNotOneDate(row.SurveyPeriods)"
-      >
+      @if (row.SurveyPeriods && checkIfNotOneDate(row.SurveyPeriods)) {
+      <mat-form-field>
         <mat-label>{{
           "Select period" | language : "langs" : "selectPeriod"
         }}</mat-label>
@@ -120,6 +121,7 @@
           }
         </mat-select>
       </mat-form-field>
+      }
     </td>
   </ng-container>
 

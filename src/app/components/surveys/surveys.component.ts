@@ -29,6 +29,7 @@ import { UiService } from '../../services/ui.service';
 import { LanguagePipe } from '../../pipes/language.pipe';
 
 import { Period, Survey } from '../../types';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-surveys',
@@ -99,7 +100,11 @@ export class SurveysComponent {
 
   isLoading: boolean = true;
 
-  constructor(private dataService: DataService, private uiService: UiService) {}
+  constructor(
+    private dataService: DataService,
+    private uiService: UiService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
     this.subscription = this.uiService.selectedSurvey$.subscribe(
@@ -250,6 +255,9 @@ export class SurveysComponent {
         console.log(
           `Survey name updated successfully: ${JSON.stringify(response)}`
         );
+
+        this.toastr.success('Survey name updated successfully');
+
         const index = this.surveys.findIndex(
           (item) => item.SRV_ID === survey.SRV_ID
         );
@@ -259,6 +267,9 @@ export class SurveysComponent {
       },
       error: (error) => {
         console.error('Error updating item:', error);
+        this.toastr.error(
+          `Error updating item: ${JSON.stringify(error.message)}`
+        );
       },
     });
   }

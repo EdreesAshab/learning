@@ -57,45 +57,42 @@
   <!-- Main section -->
   <div style="width: 100%">
     <!-- No Surveys -->
-    <p *ngIf="currentSurveys && currentSurveys.length === 0 && !isLoading">
+    @if (currentSurveys && currentSurveys.length === 0 && !isLoading) {
+    <p>
       {{ "NO RESULTS FOUND" | language : "langs" : "noResults" }}
     </p>
-
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    } @if (isLoading) {
+    <mat-spinner></mat-spinner>
+    }
 
     <!-- Surveys -->
-    <div *ngIf="currentSurveys && currentSurveys.length !== 0">
-      <!-- Survey View Tab -->
-      <mat-tab-group
-        (selectedTabChange)="handleViewTabChangeEvent($event)"
-        [selectedIndex]="selectedView === 'list' ? 0 : 1"
-      >
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon [fontIcon]="'list'"></mat-icon>
-            {{ "List" | language : "langs" : "listView" }}
-          </ng-template>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon [fontIcon]="'grid_view'"></mat-icon>
-            {{ "Grid" | language : "langs" : "gridView" }}
-          </ng-template>
-        </mat-tab>
-      </mat-tab-group>
+    @if (currentSurveys && currentSurveys.length !== 0) {
+    <!-- Survey View Tab -->
+    <mat-tab-group
+      (selectedTabChange)="handleViewTabChangeEvent($event)"
+      [selectedIndex]="selectedView === 'list' ? 0 : 1"
+    >
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon [fontIcon]="'list'"></mat-icon>
+          {{ "List" | language : "langs" : "listView" }}
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon [fontIcon]="'grid_view'"></mat-icon>
+          {{ "Grid" | language : "langs" : "gridView" }}
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
 
-      <!-- Surveys list view -->
-      <app-surveys-list-view
-        [surveys]="currentSurveys"
-        *ngIf="selectedView === 'list'"
-      ></app-surveys-list-view>
-
-      <!-- Surveys grid view -->
-      <app-surveys-grid-view
-        [surveys]="currentSurveys"
-        *ngIf="selectedView === 'grid'"
-      ></app-surveys-grid-view>
-    </div>
+    <!-- Surveys list view -->
+    @if (selectedView === 'list') {
+    <app-surveys-list-view [surveys]="currentSurveys"></app-surveys-list-view>
+    } @else if (selectedView === 'grid') {
+    <!-- Surveys grid view -->
+    <app-surveys-grid-view [surveys]="currentSurveys"></app-surveys-grid-view>
+    } }
   </div>
 
   <!-- Paginator -->

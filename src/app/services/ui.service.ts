@@ -1,13 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 import { BehaviorSubject } from 'rxjs';
 
 import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from 'ngx-toastr';
 
 import { Sort } from '@angular/material/sort';
 
 import { Period, Survey } from '../types';
-import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -34,6 +35,7 @@ export class UiService {
 
   constructor(
     private cookieService: CookieService,
+    private toastr: ToastrService,
     @Inject(DOCUMENT) private document: Document
   ) {
     if (cookieService.get('language') === '')
@@ -74,8 +76,17 @@ export class UiService {
   }
 
   toggleLanguage(): void {
-    if (this.currentLanguage === 'Ar') this.currentLanguage = 'En';
-    else this.currentLanguage = 'Ar';
+    if (this.currentLanguage === 'Ar') {
+      this.toastr.success(
+        'تم ضبط اللغة إلى اللغة الإنجليزية\nLanguage has been set to English'
+      );
+      this.currentLanguage = 'En';
+    } else {
+      this.toastr.success(
+        'تم ضبط اللغة إلى العربية\nLanguage has been set to Arabic'
+      );
+      this.currentLanguage = 'Ar';
+    }
     this.cookieService.set('language', this.currentLanguage);
 
     this.htmlTag.dir = this.currentLanguage === 'Ar' ? 'rtl' : 'ltr';
@@ -84,8 +95,17 @@ export class UiService {
   }
 
   toggleTextSize(): void {
-    if (this.currentTextSize === 1) this.currentTextSize = 2;
-    else this.currentTextSize = 1;
+    if (this.currentTextSize === 1) {
+      this.currentTextSize = 2;
+      if (this.currentLanguage === 'Ar')
+        this.toastr.success('تم ضبط حجم النص إلى كبير');
+      else this.toastr.success('Text size has been set to large');
+    } else {
+      this.currentTextSize = 1;
+      if (this.currentLanguage === 'Ar')
+        this.toastr.success('تم ضبط حجم النص إلى الوضع الطبيعي');
+      else this.toastr.success('Text size has been set to normal');
+    }
     this.cookieService.set('textSize', this.currentTextSize.toString());
     this.textSizeSubject.next(this.currentTextSize);
   }

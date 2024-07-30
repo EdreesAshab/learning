@@ -31,7 +31,12 @@
       "SystemType": 3,
       "SURVEY_STATUS_AR": "منشورة",
       "SURVEY_STATUS_EN": "Published",
-      "SurveyPeriods": "[{\"ID\":27076,\"START_DATE\":\"2021-02-22T00:00:00\",\"END_DATE\":\"2022-01-31T00:00:00\"}]"
+      "SurveyPeriods": "[{\"ID\":27076,\"START_DATE\":\"2021-02-22T00:00:00\",\"END_DATE\":\"2022-01-31T00:00:00\"}]",
+      "SelectedPeriod": {
+        "ID": 27076,
+        "START_DATE": "2021-02-22T00:00:00",
+        "END_DATE": "2022-01-31T00:00:00"
+      }
     },
     {
       "TEMPLATE_ID": 29127,
@@ -53,27 +58,37 @@
       "TemplateNameAr": "فحص ماتركس - اظهار - مركز اتصال ",
       "TemplateNameEn": "test matrix - show - Call Center ",
       "SurveyName": "test matrix - show",
-      "SurveyNameAr": "فحص ماتركس - اظهار ",
+      "SurveyNameAr": "فحص ماتركس - اظهار",
       "SurveyNameEn": "test matrix - show",
       "SRV_ID": 9520,
       "SystemType": 3,
       "SURVEY_STATUS_AR": "منشورة",
       "SURVEY_STATUS_EN": "Published",
-      "SurveyPeriods": "[{\"ID\":27017,\"START_DATE\":\"2021-09-16T00:00:00\",\"END_DATE\":\"2021-10-31T00:00:00\"}]"
+      "SurveyPeriods": "[{\"ID\":27017,\"START_DATE\":\"2021-09-16T00:00:00\",\"END_DATE\":\"2021-10-31T00:00:00\"}]",
+      "SelectedPeriod": {
+        "ID": 27017,
+        "START_DATE": "2021-09-16T00:00:00",
+        "END_DATE": "2021-10-31T00:00:00"
+      }
     },
     {
       "TEMPLATE_ID": 29079,
       "TemplateName": "test dis-enb.  case  - Call Center ",
       "TemplateNameAr": "تفعيل تعطيل فحص- مركز اتصال ",
       "TemplateNameEn": "test dis-enb.  case  - Call Center ",
-      "SurveyName": "test dis-enb.  case ",
+      "SurveyName": "test dis-enb.  case",
       "SurveyNameAr": "تفعيل تعطيل فحص",
-      "SurveyNameEn": "test dis-enb.  case ",
+      "SurveyNameEn": "test dis-enb.  case",
       "SRV_ID": 9515,
       "SystemType": 3,
       "SURVEY_STATUS_AR": "منشورة",
       "SURVEY_STATUS_EN": "Published",
-      "SurveyPeriods": "[{\"ID\":27012,\"START_DATE\":\"2021-09-16T00:00:00\",\"END_DATE\":\"2021-10-31T00:00:00\"}]"
+      "SurveyPeriods": "[{\"ID\":27012,\"START_DATE\":\"2021-09-16T00:00:00\",\"END_DATE\":\"2021-10-31T00:00:00\"}]",
+      "SelectedPeriod": {
+        "ID": 27012,
+        "START_DATE": "2021-09-16T00:00:00",
+        "END_DATE": "2021-10-31T00:00:00"
+      }
     },
     {
       "TEMPLATE_ID": 28516,

@@ -3,11 +3,13 @@
   gutterSize="10px"
   [dir]="language === 'Ar' ? 'rtl' : 'ltr'"
 >
-  <mat-grid-tile *ngFor="let survey of surveys"
+  @for (survey of surveys; track survey.SRV_ID) {
+  <mat-grid-tile
     ><app-survey-grid-view-item
       [survey]="survey"
       (click)="selectSurvey(survey)"
       [isSelected]="isSelected(survey.SRV_ID)"
     ></app-survey-grid-view-item
   ></mat-grid-tile>
+  }
 </mat-grid-list>
