@@ -3,6 +3,7 @@ import {
   ElementRef,
   HostListener,
   Input,
+  OnInit,
   Renderer2,
 } from '@angular/core';
 
@@ -15,7 +16,7 @@ import { PasswordRules } from '../Rules';
   selector: '[appPasswordValidator]',
   standalone: true,
 })
-export class PasswordValidatorDirective {
+export class PasswordValidatorDirective implements OnInit {
   @Input() appPasswordValidator?: PasswordValidatorOptions = {
     rules: PasswordRules,
     userName: 'ali',

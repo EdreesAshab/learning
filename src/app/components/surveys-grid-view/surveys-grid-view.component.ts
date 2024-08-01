@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Subscription } from 'rxjs';
@@ -18,7 +18,7 @@ import { type Survey } from '../../models/Survey.model';
   templateUrl: './surveys-grid-view.component.html',
   styleUrl: './surveys-grid-view.component.css',
 })
-export class SurveysGridViewComponent {
+export class SurveysGridViewComponent implements OnInit {
   @Input() surveys: Survey[];
 
   selectedSurvey: Survey | null;

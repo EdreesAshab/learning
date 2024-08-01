@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -12,6 +12,8 @@ import { LanguagePipe } from '../../pipes/language.pipe';
 
 import { type Survey } from '../../models/Survey.model';
 import { type Period } from '../../models/Period.model';
+import { Subscription } from 'rxjs';
+import { ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-survey-grid-view-item',
@@ -29,16 +31,30 @@ import { type Period } from '../../models/Period.model';
   templateUrl: './survey-grid-view-item.component.html',
   styleUrl: './survey-grid-view-item.component.css',
 })
-export class SurveyGridViewItemComponent {
+export class SurveyGridViewItemComponent implements OnInit {
   @Input() survey: Survey;
   @Input() isSelected: boolean;
   surveyIcon = 'check';
   color = '#02CA98';
   iconColor = this.color;
 
+  textColor = '#1d1b1e';
+
+  subscription: Subscription;
+
   surveyPeriods: Period[] = [];
 
+  constructor(private themeService: ThemeService) {}
+
   ngOnInit() {
+    this.subscription = this.themeService.darkTheme$.subscribe(
+      (isDarkTheme) => {
+        if (isDarkTheme) {
+          this.textColor = '#ffffff';
+        } else this.textColor = '#1d1b1e';
+      }
+    );
+
     if (this.survey.SurveyPeriods)
       this.surveyPeriods = JSON.parse(this.survey.SurveyPeriods);
 

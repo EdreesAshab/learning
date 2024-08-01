@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -39,7 +39,7 @@ import { type Survey } from '../../models/Survey.model';
   templateUrl: './surveys-list-view.component.html',
   styleUrl: './surveys-list-view.component.css',
 })
-export class SurveysListViewComponent {
+export class SurveysListViewComponent implements OnInit {
   displayedColumns: string[] = ['radio', 'surveyName', 'from', 'to', 'period'];
 
   @ViewChild(MatSort) sort: MatSort;

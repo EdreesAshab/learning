@@ -3,6 +3,7 @@ import {
   Directive,
   ElementRef,
   Input,
+  OnInit,
   Renderer2,
   SimpleChanges,
 } from '@angular/core';
@@ -15,7 +16,7 @@ import { UiService } from '../services/ui.service';
   selector: '[appInitialsCircle]',
   standalone: true,
 })
-export class InitialsCircleDirective {
+export class InitialsCircleDirective implements OnInit {
   @Input() appInitialsCircle: string;
 
   initials: string;
@@ -25,6 +26,8 @@ export class InitialsCircleDirective {
   language: string;
 
   textSize: number;
+
+  isDarkTheme: boolean;
 
   span: any;
 

@@ -3,7 +3,7 @@
   class="survey-item"
   (mouseenter)="onMouseEnter()"
   (mouseleave)="onMouseLeave()"
-  [ngStyle]="{ '--bColor': color }"
+  [ngStyle]="{ '--bColor': color, color: textColor }"
   [class.selectedSurvey]="isSelected"
 >
   <div class="iconDiv">

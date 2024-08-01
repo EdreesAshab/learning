@@ -6,10 +6,9 @@
 }
 
 .surveysContainer {
-  background-color: #fff;
   padding: 20px;
-  height: auto;
-  flex-grow: 1;
+  height: 100%;
+  border-radius: 0;
 }
 
 .surveySearch {

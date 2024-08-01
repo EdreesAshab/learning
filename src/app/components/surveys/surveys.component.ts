@@ -1,4 +1,11 @@
-import { Component, inject, Input, signal, ViewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  Input,
+  OnInit,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -18,6 +25,7 @@ import { MatSortModule, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCard } from '@angular/material/card';
 
 import { SurveyGridViewItemComponent } from '../survey-grid-view-item/survey-grid-view-item.component';
 import { SurveyDialogComponent } from '../survey-dialog/survey-dialog.component';
@@ -49,6 +57,7 @@ import { type Survey } from '../../models/Survey.model';
     MatTableModule,
     MatSortModule,
     MatMenuModule,
+    MatCard,
     MatProgressSpinnerModule,
     SurveyGridViewItemComponent,
     SurveysListViewComponent,
@@ -59,7 +68,7 @@ import { type Survey } from '../../models/Survey.model';
   templateUrl: './surveys.component.html',
   styleUrl: './surveys.component.css',
 })
-export class SurveysComponent {
+export class SurveysComponent implements OnInit {
   surveys: Survey[];
   surveysPeriods: Period[] = [];
 

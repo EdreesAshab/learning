@@ -1,21 +1,18 @@
 .selectedSurvey {
   border-top: 3px solid #02ca98;
   border-bottom: 3px solid #02ca98;
-  background-color: #f9f9f9;
 }
 
 .selectedLeftSurvey {
   border-left: 3px solid #02ca98;
   border-top: 3px solid #02ca98;
   border-bottom: 3px solid #02ca98;
-  background-color: #f9f9f9;
 }
 
 .selectedRightSurvey {
   border-top: 3px solid #02ca98;
   border-bottom: 3px solid #02ca98;
   border-right: 3px solid #02ca98;
-  background-color: #f9f9f9;
 }
 
 .mat-icon.en {

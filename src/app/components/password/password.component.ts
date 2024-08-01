@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -20,7 +20,7 @@ import { PasswordRules } from '../../Rules';
   templateUrl: './password.component.html',
   styleUrl: './password.component.css',
 })
-export class PasswordComponent {
+export class PasswordComponent implements OnInit {
   isHidden: string = 'password';
   showPasswordBtn: string = 'Show Password';
 

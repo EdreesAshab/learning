@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { OnInit, Pipe, PipeTransform } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
@@ -11,7 +11,7 @@ import langs from '../langs.json';
   standalone: true,
   pure: false,
 })
-export class LanguagePipe implements PipeTransform {
+export class LanguagePipe implements OnInit, PipeTransform {
   language: string;
 
   subscription: Subscription;
@@ -21,6 +21,8 @@ export class LanguagePipe implements PipeTransform {
       this.language = language;
     });
   }
+
+  ngOnInit() {}
 
   transform(value: any, ...args: string[]): any {
     if (args[0] === 'langs')

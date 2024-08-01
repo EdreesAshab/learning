@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 
@@ -16,7 +16,8 @@ import { LanguagePipe } from '../../pipes/language.pipe';
 
 import { InitialsCircleDirective } from '../../directives/initials-circle.directive';
 
-import { type User } from '../../models/User.model';
+import { User } from '../../models/User.model';
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
 
 @Component({
   selector: 'app-header',
@@ -29,11 +30,12 @@ import { type User } from '../../models/User.model';
     MatDividerModule,
     LanguagePipe,
     InitialsCircleDirective,
+    ThemeToggleComponent,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   currentUser: User;
 
   language: string;

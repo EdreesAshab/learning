@@ -1,4 +1,4 @@
-import { Component, inject, model } from '@angular/core';
+import { Component, inject, model, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
@@ -38,7 +38,7 @@ import { type Survey } from '../../models/Survey.model';
   templateUrl: './survey-dialog.component.html',
   styleUrl: './survey-dialog.component.css',
 })
-export class SurveyDialogComponent {
+export class SurveyDialogComponent implements OnInit {
   readonly dialogRef = inject(MatDialogRef<SurveyDialogComponent>);
   readonly data = inject<Survey>(MAT_DIALOG_DATA);
   readonly SurveyNameAr = model(this.data.SurveyNameAr);
